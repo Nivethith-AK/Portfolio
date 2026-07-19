@@ -147,6 +147,7 @@
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
+    overflow-x: clip;
   }
 
   body {
@@ -157,13 +158,14 @@
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "cv11", "ss01";
     font-synthesis-weight: none;
+    overflow-x: clip;
   }
 
   /* Theme colour crossfade is opt-in via `html.theme-animate` (see below). */
 
-  /* Offset for sticky navbar when jumping to a section */
+  /* Offset for sticky navbar when jumping to a section (+ iOS safe area) */
   section[id] {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: calc(5.5rem + env(safe-area-inset-top, 0px));
   }
 
   /* Consistent, visible focus ring for keyboard users */
@@ -299,8 +301,11 @@
     animation: marquee 32s linear infinite;
   }
 
-  .pause-on-hover:hover .animate-marquee {
-    animation-play-state: paused;
+  /* Only pause on real hover — sticky :hover on iOS can freeze the marquee. */
+  @media (hover: hover) and (pointer: fine) {
+    .pause-on-hover:hover .animate-marquee {
+      animation-play-state: paused;
+    }
   }
 
   /* Soft pulsing accent glow */

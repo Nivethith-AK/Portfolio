@@ -13,9 +13,19 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 const sectionIds = navItems.map((item) => item.id);
 
+function clearBodyLock() {
+  document.body.style.position = "";
+  document.body.style.top = "";
+  document.body.style.left = "";
+  document.body.style.right = "";
+  document.body.style.width = "";
+  document.body.style.overflow = "";
+}
+
 export function Navbar() {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const lockYRef = React.useRef(0);
   const activeId = useActiveSection(sectionIds);
 
   React.useEffect(() => {
@@ -25,12 +35,22 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll while the mobile menu is open.
+  // iOS-safe body scroll lock while the mobile menu is open.
   React.useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    if (open) {
+      lockYRef.current = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${lockYRef.current}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
+    } else {
+      const y = lockYRef.current;
+      clearBodyLock();
+      if (y) window.scrollTo(0, y);
+    }
+    return () => clearBodyLock();
   }, [open]);
 
   // Close mobile menu on Escape.
@@ -50,10 +70,9 @@ export function Navbar() {
     e.preventDefault();
     const menuWasOpen = open;
     setOpen(false);
-    // Unlock scroll before scrolling when the mobile menu had locked the body.
+    // Wait for the body unlock + menu exit, then scroll to the section.
     if (menuWasOpen) {
-      document.body.style.overflow = "";
-      window.setTimeout(() => scrollToHash(href), 40);
+      window.setTimeout(() => scrollToHash(href), 60);
       return;
     }
     scrollToHash(href);
@@ -65,9 +84,9 @@ export function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300",
-        scrolled
-          ? "border-b border-border bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75"
+        "fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-[background-color,border-color,backdrop-filter] duration-300",
+        scrolled || open
+          ? "border-b border-border bg-background/95 backdrop-blur-md md:bg-background/85"
           : "border-b border-transparent bg-transparent",
       )}
     >
@@ -122,11 +141,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Button
-            asChild
-            size="sm"
-            className="hidden sm:inline-flex"
-          >
+          <Button asChild size="sm" className="hidden sm:inline-flex">
             <a href="#contact" onClick={(e) => handleNavClick(e, "#contact")}>
               Get in touch
             </a>
@@ -148,35 +163,54 @@ export function Navbar() {
       {/* Mobile menu */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-b border-border bg-background/95 backdrop-blur-md md:hidden"
-          >
-            <div className="flex flex-col gap-1 px-6 py-4">
-              {navItems.map((item) => {
-                const isActive = activeId === item.id;
-                return (
-                  <a
-                    key={item.id}
-                    href={item.href}
-                    onClick={(e) => handleNavClick(e, item.href)}
-                    className={cn(
-                      "rounded-lg px-3 py-2.5 text-base font-medium transition-colors",
-                      isActive
-                        ? "bg-surface text-foreground"
-                        : "text-muted-foreground hover:bg-surface hover:text-foreground",
-                    )}
-                  >
-                    {item.label}
-                  </a>
-                );
-              })}
-            </div>
-          </motion.div>
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 top-[calc(4rem+env(safe-area-inset-top))] z-40 bg-background/40 backdrop-blur-[1px] md:hidden"
+              onClick={() => setOpen(false)}
+            />
+            <motion.div
+              id="mobile-menu"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="relative z-50 overflow-hidden border-b border-border bg-background md:hidden"
+            >
+              <div className="flex max-h-[min(70dvh,28rem)] flex-col gap-1 overflow-y-auto overscroll-contain px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+                {navItems.map((item) => {
+                  const isActive = activeId === item.id;
+                  return (
+                    <a
+                      key={item.id}
+                      href={item.href}
+                      onClick={(e) => handleNavClick(e, item.href)}
+                      className={cn(
+                        "flex min-h-11 items-center rounded-lg px-3 py-3 text-base font-medium transition-colors",
+                        isActive
+                          ? "bg-surface text-foreground"
+                          : "text-muted-foreground active:bg-surface hover:bg-surface hover:text-foreground",
+                      )}
+                    >
+                      {item.label}
+                    </a>
+                  );
+                })}
+                <a
+                  href="#contact"
+                  onClick={(e) => handleNavClick(e, "#contact")}
+                  className="mt-2 flex min-h-11 items-center justify-center rounded-lg bg-primary px-3 py-3 text-base font-medium text-primary-foreground"
+                >
+                  Get in touch
+                </a>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.header>

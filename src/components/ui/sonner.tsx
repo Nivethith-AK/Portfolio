@@ -14,6 +14,7 @@ export function Toaster(props: ToasterProps) {
       theme={(resolvedTheme as ToasterProps["theme"]) ?? "system"}
       className="toaster group"
       position="bottom-right"
+      offset={88}
       toastOptions={{
         classNames: {
           toast:

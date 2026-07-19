@@ -12,7 +12,7 @@ type MagneticProps = {
 
 /**
  * Wraps content so it gently follows the cursor while hovered,
- * then springs back to rest on leave.
+ * then springs back to rest on leave. Disabled on touch devices.
  */
 export function Magnetic({
   children,
@@ -21,6 +21,15 @@ export function Magnetic({
 }: MagneticProps) {
   const ref = React.useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
+  const [finePointer, setFinePointer] = React.useState(false);
+
+  React.useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const sync = () => setFinePointer(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -28,7 +37,7 @@ export function Magnetic({
   const springY = useSpring(y, { stiffness: 250, damping: 18 });
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (prefersReduced || !ref.current) return;
+    if (prefersReduced || !finePointer || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const relX = e.clientX - (rect.left + rect.width / 2);
     const relY = e.clientY - (rect.top + rect.height / 2);
@@ -40,6 +49,10 @@ export function Magnetic({
     x.set(0);
     y.set(0);
   };
+
+  if (!finePointer || prefersReduced) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div

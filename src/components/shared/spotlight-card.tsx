@@ -20,8 +20,7 @@ type SpotlightCardProps = {
 
 /**
  * A card that tilts in 3D toward the cursor and reveals a radial
- * accent "spotlight" that tracks the pointer. Pure eye candy that
- * still respects reduced-motion.
+ * accent "spotlight" that tracks the pointer. Disabled on touch.
  */
 export function SpotlightCard({
   children,
@@ -30,19 +29,25 @@ export function SpotlightCard({
 }: SpotlightCardProps) {
   const ref = React.useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
+  const [finePointer, setFinePointer] = React.useState(false);
 
-  // Pointer position for the spotlight gradient.
+  React.useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const sync = () => setFinePointer(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
   const mx = useMotionValue(50);
   const my = useMotionValue(50);
-
-  // Rotation driven by pointer, smoothed with springs.
   const rx = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
   const ry = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
 
   const spotlight = useMotionTemplate`radial-gradient(240px circle at ${mx}% ${my}%, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 70%)`;
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+    if (!finePointer || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
@@ -60,6 +65,10 @@ export function SpotlightCard({
     mx.set(50);
     my.set(50);
   };
+
+  if (!finePointer) {
+    return <div className={cn("relative", className)}>{children}</div>;
+  }
 
   return (
     <motion.div

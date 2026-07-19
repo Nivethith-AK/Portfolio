@@ -33,17 +33,26 @@ function parseStat(value: string) {
 
 export function Hero() {
   const prefersReduced = useReducedMotion();
+  const [finePointer, setFinePointer] = React.useState(false);
+
+  React.useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const sync = () => setFinePointer(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   // Cursor-tracking spotlight: a fixed-size gradient circle moved with
   // transforms (compositor-only) instead of repainting a full-viewport
-  // gradient on every mouse move.
+  // gradient on every mouse move. Desktop only.
   const mx = useMotionValue(-900);
   const my = useMotionValue(-900);
   const spotX = useSpring(mx, { stiffness: 160, damping: 26, mass: 0.5 });
   const spotY = useSpring(my, { stiffness: 160, damping: 26, mass: 0.5 });
 
   const handleMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (prefersReduced) return;
+    if (prefersReduced || !finePointer) return;
     const rect = e.currentTarget.getBoundingClientRect();
     mx.set(e.clientX - rect.left);
     my.set(e.clientY - rect.top);
@@ -97,20 +106,22 @@ export function Hero() {
       >
         <div className="bg-grid animate-grid-drift absolute -inset-16" />
       </div>
-      {/* Cursor spotlight */}
-      <motion.div
-        aria-hidden
-        style={{ x: spotX, y: spotY }}
-        className="pointer-events-none absolute left-0 top-0 -z-10 will-change-transform"
-      >
-        <div
-          className="size-[50rem] -translate-x-1/2 -translate-y-1/2"
-          style={{
-            background:
-              "radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 62%)",
-          }}
-        />
-      </motion.div>
+      {/* Cursor spotlight (fine pointer only) */}
+      {finePointer && !prefersReduced ? (
+        <motion.div
+          aria-hidden
+          style={{ x: spotX, y: spotY }}
+          className="pointer-events-none absolute left-0 top-0 -z-10 will-change-transform"
+        >
+          <div
+            className="size-[50rem] -translate-x-1/2 -translate-y-1/2"
+            style={{
+              background:
+                "radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 62%)",
+            }}
+          />
+        </motion.div>
+      ) : null}
 
       <Container className="py-20">
         <motion.div

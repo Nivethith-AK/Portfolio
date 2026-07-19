@@ -36,7 +36,7 @@ export function ScrollToTop() {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.94 }}
           transition={{ type: "spring", stiffness: 300, damping: 22 }}
-          className="fixed bottom-6 right-6 z-50 grid size-12 place-items-center rounded-full border border-border bg-background/80 text-foreground shadow-md backdrop-blur-xl transition-colors hover:border-primary/40 hover:text-primary"
+          className="fixed z-50 grid size-12 place-items-center rounded-full border border-border bg-background/90 text-foreground shadow-md backdrop-blur-xl transition-colors hover:border-primary/40 hover:text-primary bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-[max(1.5rem,env(safe-area-inset-right))]"
         >
           <svg
             className="absolute inset-0 -rotate-90"

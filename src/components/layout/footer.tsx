@@ -65,7 +65,7 @@ export function Footer() {
                   <a
                     href={item.href}
                     onClick={(e) => handleAnchor(e, item.href)}
-                    className="text-sm text-foreground/80 transition-colors hover:text-primary"
+                      className="inline-flex min-h-11 items-center text-sm text-foreground/80 transition-colors hover:text-primary"
                   >
                     {item.label}
                   </a>
@@ -102,7 +102,7 @@ export function Footer() {
                           {social.handle}
                         </span>
                       ) : null}
-                      <ArrowUpRight className="size-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
+                      <ArrowUpRight className="size-3.5 opacity-70 transition-opacity sm:opacity-0 sm:group-hover:opacity-100" />
                     </a>
                   </li>
                 );
@@ -118,7 +118,7 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${profile.email}`}
-                  className="group inline-flex items-start gap-2 text-foreground/80 transition-colors hover:text-primary"
+                  className="group inline-flex min-h-11 items-start gap-2 py-2 text-foreground/80 transition-colors hover:text-primary"
                 >
                   <Mail className="mt-0.5 size-3.5 shrink-0 opacity-70" aria-hidden />
                   <span className="break-all">{profile.email}</span>
@@ -129,11 +129,11 @@ export function Footer() {
                   href={profile.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 text-foreground/80 transition-colors hover:text-primary"
+                  className="group inline-flex min-h-11 items-center gap-2 py-2 text-foreground/80 transition-colors hover:text-primary"
                 >
                   <FileText className="size-3.5 shrink-0 opacity-70" aria-hidden />
                   Download resume
-                  <ArrowUpRight className="size-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <ArrowUpRight className="size-3.5 opacity-70 transition-opacity sm:opacity-0 sm:group-hover:opacity-100" />
                 </a>
               </li>
               {degree ? (

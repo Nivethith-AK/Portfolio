@@ -39,12 +39,12 @@ export function Contact() {
                           <span className="text-sm font-medium text-foreground">
                             {social.label}
                           </span>
-                          <span className="text-sm text-muted-foreground">
+                          <span className="break-all text-sm text-muted-foreground">
                             {social.handle}
                           </span>
                         </span>
                       </span>
-                      <ArrowUpRight className="size-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                      <ArrowUpRight className="size-4 shrink-0 text-muted-foreground opacity-70 transition-opacity sm:opacity-0 sm:group-hover:opacity-100" />
                     </a>
                   </li>
                 );
