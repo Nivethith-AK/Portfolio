@@ -1,0 +1,14 @@
+---
+description: Commit and push portfolio changes to GitHub after finishing work
+alwaysApply: true
+---
+
+# Push after changes
+
+When you finish making code or content changes in this portfolio repo:
+
+1. Run `git status` / `git diff` to see what changed.
+2. Commit with a clear message (only when there are real changes).
+3. Push to `origin main` (`git push origin main`).
+
+Do this by default after completing a task — the user wants GitHub (and Vercel) kept up to date. Do not force-push. Do not commit secrets (`.env.local`, API keys).
