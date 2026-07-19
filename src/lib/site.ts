@@ -18,8 +18,8 @@ function resolveSiteUrl(): string {
 
 export const siteConfig = {
   name: "Nivethith Arasakumar",
-  shortName: "Nivethith",
-  title: "Nivethith Arasakumar — AI, ML & Data Science Engineer | Portfolio",
+  shortName: "Nive",
+  title: "Nive - Portfolio",
   description:
     "Portfolio of Nivethith Arasakumar — Computer Science undergraduate and aspiring Data Scientist, AI Engineer, Machine Learning Engineer and DevOps Engineer from Colombo, Sri Lanka. Certified Microsoft AI & ML Engineer and IBM Data Science Professional. Projects include CVForge, NovaStack AI, NIVI and Avntae.",
   url: resolveSiteUrl(),
