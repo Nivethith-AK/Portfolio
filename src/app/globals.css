@@ -1,0 +1,509 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* next-themes toggles the `.dark` class on <html>. */
+@custom-variant dark (&:is(.dark *));
+
+/* Register colour tokens so they can interpolate during theme switches.
+   Content stays on screen — only colours crossfade (no covering overlay). */
+@property --background {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffffff;
+}
+@property --surface {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f8f8f8;
+}
+@property --border {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e5e5e5;
+}
+@property --foreground {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #111111;
+}
+@property --muted-foreground {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #525252;
+}
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+:root {
+  /* Surfaces & text — Light theme */
+  --background: #ffffff;
+  --surface: #f8f8f8;
+  --border: #e5e5e5;
+  --foreground: #111111;
+  --muted-foreground: #525252;
+
+  /* Single accent used consistently across the site */
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+
+  /* Derived semantic tokens (map onto surfaces above) */
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: #ffffff;
+  --popover-foreground: var(--foreground);
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-foreground);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface);
+  --input: var(--border);
+  --ring: var(--accent);
+
+  --radius: 0.75rem;
+
+  /* Subtle, purposeful elevation (kept minimal on purpose) */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-md: 0 4px 16px -4px rgb(0 0 0 / 0.08);
+}
+
+.dark {
+  /* Surfaces & text — Dark theme */
+  --background: #0a0a0a;
+  --surface: #111111;
+  --border: #222222;
+  --foreground: #fafafa;
+  --muted-foreground: #a1a1aa;
+
+  /* Accent tuned slightly brighter for AA contrast on dark surfaces */
+  --accent: #3b82f6;
+  --accent-foreground: #0a0a0a;
+
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: #111111;
+  --popover-foreground: var(--foreground);
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-foreground);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface);
+  --input: var(--border);
+  --ring: var(--accent);
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 0 8px 30px -6px rgb(0 0 0 / 0.6);
+}
+
+/* ------------------------------------------------------------------ */
+/* Tailwind theme mapping                                              */
+/* ------------------------------------------------------------------ */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Ultra-wide breakpoint */
+  --breakpoint-3xl: 120rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base styles                                                         */
+/* ------------------------------------------------------------------ */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv11", "ss01";
+    font-synthesis-weight: none;
+  }
+
+  /* Theme colour crossfade is opt-in via `html.theme-animate` (see below). */
+
+  /* Offset for sticky navbar when jumping to a section */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  /* Consistent, visible focus ring for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 22%, transparent);
+    color: var(--color-foreground);
+  }
+
+  /* Refined, unobtrusive scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Utilities & primitives                                              */
+/* ------------------------------------------------------------------ */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Hairline top-to-bottom section divider that reads on both themes */
+  .bg-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-border) 60%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-border) 60%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 64px 64px;
+  }
+
+  .mask-radial-faded {
+    mask-image: radial-gradient(
+      ellipse 60% 60% at 50% 0%,
+      #000 30%,
+      transparent 75%
+    );
+  }
+
+  /* Compositor-only drift for the hairline grid (animates transform, not
+     background-position, so it never repaints). Apply to an oversized child
+     of a masked wrapper. */
+  .animate-grid-drift {
+    animation: grid-drift 40s linear infinite;
+    will-change: transform;
+  }
+
+  /* Text filled with a moving accent gradient */
+  .text-gradient {
+    background-image: linear-gradient(
+      110deg,
+      var(--color-foreground) 0%,
+      var(--color-foreground) 35%,
+      var(--color-accent) 50%,
+      var(--color-foreground) 65%,
+      var(--color-foreground) 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-shift 6s ease-in-out infinite;
+  }
+
+  .text-gradient-accent {
+    background-image: linear-gradient(
+      110deg,
+      var(--color-accent),
+      color-mix(in srgb, var(--color-accent) 40%, #a855f7),
+      var(--color-accent)
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-shift 5s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 12s ease-in-out infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 22s linear infinite;
+  }
+
+  .animate-aurora {
+    animation: aurora 18s ease-in-out infinite alternate;
+  }
+
+  /* Sheen that sweeps across an element */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-120%);
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      color-mix(in srgb, var(--color-foreground) 10%, transparent) 50%,
+      transparent 80%
+    );
+    animation: shimmer 3.5s ease-in-out infinite;
+  }
+
+  .animate-marquee {
+    animation: marquee 32s linear infinite;
+  }
+
+  .pause-on-hover:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+
+  /* Soft pulsing accent glow */
+  .glow-pulse {
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+
+  .bg-radial-spotlight {
+    background: radial-gradient(
+      600px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in srgb, var(--color-accent) 12%, transparent),
+      transparent 45%
+    );
+  }
+
+  /* Fine film-grain overlay for a premium, textured feel */
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  /* A conic "beam" that slowly rotates behind an element */
+  .conic-beam {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      color-mix(in srgb, var(--color-accent) 30%, transparent) 40deg,
+      transparent 120deg,
+      transparent 360deg
+    );
+  }
+
+  .animate-shine {
+    background-size: 200% auto;
+    animation: shine 4s linear infinite;
+  }
+
+  /* Animated gradient border wrapper */
+  .gradient-border {
+    position: relative;
+    background: var(--color-card);
+    background-clip: padding-box;
+    border: 1px solid transparent;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    margin: -1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      130deg,
+      color-mix(in srgb, var(--color-accent) 55%, transparent),
+      transparent 40%,
+      transparent 60%,
+      color-mix(in srgb, var(--color-accent) 40%, #a855f7) 100%
+    );
+    background-size: 200% 200%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: gradient-shift 5s ease-in-out infinite;
+  }
+  .gradient-border:hover::before {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Keyframes                                                           */
+/* ------------------------------------------------------------------ */
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  33% {
+    transform: translateY(-24px) translateX(12px);
+  }
+  66% {
+    transform: translateY(14px) translateX(-10px);
+  }
+}
+
+@keyframes aurora {
+  0% {
+    transform: translate(-8%, -6%) scale(1);
+  }
+  50% {
+    transform: translate(10%, 8%) scale(1.15);
+  }
+  100% {
+    transform: translate(-6%, 10%) scale(1.05);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grid-drift {
+  to {
+    transform: translate3d(-64px, -64px, 0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  60%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Prevent theme-transition flash on first paint / theme switch */
+.no-transitions * {
+  transition: none !important;
+}
+
+/* Smooth colour morph — content stays visible. Only <html> interpolates
+   tokens; child element transitions are disabled so they don't double-paint. */
+html.theme-animate {
+  transition:
+    --background 0.28s ease,
+    --surface 0.28s ease,
+    --border 0.28s ease,
+    --foreground 0.28s ease,
+    --muted-foreground 0.28s ease;
+}
+
+html.theme-animate *,
+html.theme-animate *::before,
+html.theme-animate *::after {
+  transition: none !important;
+}
+
+html.theme-animate .animate-aurora,
+html.theme-animate .animate-marquee,
+html.theme-animate .animate-grid-drift,
+html.theme-animate .animate-float,
+html.theme-animate .animate-float-slow {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-animate {
+    transition: none;
+  }
+}
