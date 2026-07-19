@@ -31,6 +31,11 @@
   inherits: true;
   initial-value: #525252;
 }
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2563eb;
+}
 /* ------------------------------------------------------------------ */
 /* Design tokens                                                       */
 /* ------------------------------------------------------------------ */
@@ -485,13 +490,21 @@ html.theme-animate {
     --surface 0.28s ease,
     --border 0.28s ease,
     --foreground 0.28s ease,
-    --muted-foreground 0.28s ease;
+    --muted-foreground 0.28s ease,
+    --accent 0.28s ease;
 }
 
 html.theme-animate *,
 html.theme-animate *::before,
 html.theme-animate *::after {
   transition: none !important;
+}
+
+html.theme-animate .theme-toggle,
+html.theme-animate .theme-toggle * {
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease !important;
 }
 
 html.theme-animate .animate-aurora,

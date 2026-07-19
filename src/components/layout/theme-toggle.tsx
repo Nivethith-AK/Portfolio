@@ -61,7 +61,7 @@ export function ThemeToggle() {
           ? `Switch to ${isDark ? "light" : "dark"} mode`
           : "Toggle theme"
       }
-      className="relative overflow-hidden border border-transparent hover:border-border"
+      className="theme-toggle relative overflow-hidden border border-transparent hover:border-border"
     >
       <Sun
         className={cn(

@@ -11,7 +11,7 @@ const hits = new Map<string, { count: number; resetAt: number }>();
 
 /** Inbox that receives portfolio contact notifications. */
 const CONTACT_TO =
-  process.env.CONTACT_TO_EMAIL?.trim() || "niknive7@gmail.com";
+  process.env.CONTACT_TO_EMAIL?.trim() || "nivethith.16@gmail.com";
 
 function memoryRateLimit(ip: string): boolean {
   const now = Date.now();

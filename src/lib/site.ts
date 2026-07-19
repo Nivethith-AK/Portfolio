@@ -19,7 +19,7 @@ function resolveSiteUrl(): string {
 export const siteConfig = {
   name: "Nivethith Arasakumar",
   shortName: "Nivethith",
-  title: "Nivethith",
+  title: "Nivethith Arasakumar — AI, ML & Data Science Engineer | Portfolio",
   description:
     "Portfolio of Nivethith Arasakumar — Computer Science undergraduate and aspiring Data Scientist, AI Engineer, Machine Learning Engineer and DevOps Engineer from Colombo, Sri Lanka. Certified Microsoft AI & ML Engineer and IBM Data Science Professional. Projects include CVForge, NovaStack AI, NIVI and Avntae.",
   url: resolveSiteUrl(),
@@ -65,6 +65,6 @@ export const siteConfig = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? "",
     bing: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ?? "",
   },
-} as const;
+};
 
 export type SiteConfig = typeof siteConfig;

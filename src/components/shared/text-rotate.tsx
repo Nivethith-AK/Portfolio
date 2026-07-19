@@ -39,7 +39,7 @@ export function TextRotate({
       <span className="invisible" aria-hidden>
         {words.reduce((a, b) => (a.length >= b.length ? a : b), "")}
       </span>
-      <AnimatePresence mode="popLayout" initial={false}>
+      <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={words[index]}
           initial={prefersReduced ? { opacity: 0 } : { y: "100%", opacity: 0 }}

@@ -53,7 +53,7 @@ export function SplitText({
         show: {
           opacity: 1,
           y: "0em",
-          filter: "blur(0px)",
+          filter: "none",
           transition: { type: "spring", stiffness: 220, damping: 24 },
         },
       };

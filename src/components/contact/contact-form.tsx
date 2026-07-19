@@ -23,6 +23,7 @@ export function ContactForm() {
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
     mode: "onTouched",
+    defaultValues: { name: "", email: "", message: "", company: "" },
   });
 
   const onSubmit = async (data: ContactInput) => {
@@ -70,10 +71,13 @@ export function ContactForm() {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="flex flex-col gap-5"
+      className="relative flex flex-col gap-5"
     >
       {/* Honeypot: hidden from humans, catches bots. */}
-      <div className="absolute left-[-9999px]" aria-hidden>
+      <div
+        className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
+        aria-hidden
+      >
         <label htmlFor="company">Company</label>
         <input
           id="company"

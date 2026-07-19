@@ -3,8 +3,8 @@
 import { cn } from "@/lib/utils";
 
 /**
- * An infinitely-scrolling horizontal row. The content is duplicated so
- * the loop is seamless; hovering pauses the motion.
+ * An infinitely-scrolling horizontal row. Content is duplicated inside one
+ * animated track so `translateX(-50%)` loops seamlessly; hovering pauses.
  */
 export function Marquee({
   items,
@@ -13,27 +13,25 @@ export function Marquee({
   items: string[];
   className?: string;
 }) {
+  const chips = items.map((item, i) => (
+    <MarqueeChip key={`${item}-${i}`} label={item} />
+  ));
+
   return (
     <div
       className={cn(
         "pause-on-hover group relative flex w-full overflow-hidden",
-        // Fade the edges so items appear/disappear gracefully.
         "[mask-image:linear-gradient(to_right,transparent,#000_10%,#000_90%,transparent)]",
         className,
       )}
     >
-      <div className="animate-marquee flex shrink-0 items-center gap-3 pr-3">
-        {items.map((item, i) => (
-          <MarqueeChip key={`a-${item}-${i}`} label={item} />
-        ))}
-      </div>
-      <div
-        aria-hidden
-        className="animate-marquee flex shrink-0 items-center gap-3 pr-3"
-      >
-        {items.map((item, i) => (
-          <MarqueeChip key={`b-${item}-${i}`} label={item} />
-        ))}
+      <div className="animate-marquee flex w-max items-center">
+        <div className="flex shrink-0 items-center gap-3 pr-3">{chips}</div>
+        <div aria-hidden className="flex shrink-0 items-center gap-3 pr-3">
+          {items.map((item, i) => (
+            <MarqueeChip key={`dup-${item}-${i}`} label={item} />
+          ))}
+        </div>
       </div>
     </div>
   );

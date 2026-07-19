@@ -25,7 +25,10 @@ export function CursorGlow() {
     // Only enable on devices with a fine pointer (mouse), and not for
     // users who prefer reduced motion.
     const fine = window.matchMedia("(pointer: fine)").matches;
-    if (!fine || prefersReduced) return;
+    if (!fine || prefersReduced) {
+      setEnabled(false);
+      return;
+    }
     setEnabled(true);
 
     const move = (e: MouseEvent) => {

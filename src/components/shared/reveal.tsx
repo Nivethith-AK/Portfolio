@@ -77,7 +77,7 @@ export function Reveal({
         opacity: 1,
         x: 0,
         y: 0,
-        ...(blur ? { filter: "blur(0px)" } : {}),
+        ...(blur ? { filter: "none" } : {}),
         ...(scale ? { scale: 1 } : {}),
       };
 
