@@ -487,41 +487,65 @@
   transition: none !important;
 }
 
-/* Smooth colour morph — content stays visible. Only <html> interpolates
-   tokens; child element transitions are disabled so they don't double-paint. */
+/* Desktop: interpolate registered colour tokens on <html>. */
 html.theme-animate {
   transition:
-    --background 0.28s ease,
-    --surface 0.28s ease,
-    --border 0.28s ease,
-    --foreground 0.28s ease,
-    --muted-foreground 0.28s ease,
-    --accent 0.28s ease;
+    --background 0.3s ease,
+    --surface 0.3s ease,
+    --border 0.3s ease,
+    --foreground 0.3s ease,
+    --muted-foreground 0.3s ease,
+    --accent 0.3s ease;
 }
 
-html.theme-animate *,
-html.theme-animate *::before,
-html.theme-animate *::after {
-  transition: none !important;
-}
-
-html.theme-animate .theme-toggle,
-html.theme-animate .theme-toggle * {
+/* Mobile: Safari often breaks @property colour morphs. Fade computed
+   background/text instead — content stays visible, no covering overlay. */
+html.theme-animate-mobile,
+html.theme-animate-mobile body {
   transition:
-    transform 0.2s ease,
-    opacity 0.2s ease !important;
+    background-color 0.3s ease,
+    color 0.3s ease !important;
 }
 
-html.theme-animate .animate-aurora,
-html.theme-animate .animate-marquee,
-html.theme-animate .animate-grid-drift,
-html.theme-animate .animate-float,
-html.theme-animate .animate-float-slow {
-  animation-play-state: paused !important;
+html.theme-animate-mobile header,
+html.theme-animate-mobile footer,
+html.theme-animate-mobile main,
+html.theme-animate-mobile section,
+html.theme-animate-mobile nav,
+html.theme-animate-mobile [class*="bg-background"],
+html.theme-animate-mobile [class*="bg-surface"],
+html.theme-animate-mobile [class*="bg-card"] {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease !important;
+}
+
+/* Desktop only: kill nested transitions so they don't fight @property. */
+@media (hover: hover) and (pointer: fine) {
+  html.theme-animate *,
+  html.theme-animate *::before,
+  html.theme-animate *::after {
+    transition: none !important;
+  }
+
+  html.theme-animate .theme-toggle,
+  html.theme-animate .theme-toggle * {
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.theme-animate {
-    transition: none;
+  html.theme-animate,
+  html.theme-animate-mobile,
+  html.theme-animate-mobile body,
+  html.theme-animate-mobile header,
+  html.theme-animate-mobile footer,
+  html.theme-animate-mobile main,
+  html.theme-animate-mobile section,
+  html.theme-animate-mobile nav {
+    transition: none !important;
   }
 }

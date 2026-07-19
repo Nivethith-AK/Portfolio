@@ -7,12 +7,17 @@ import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-/** Keep in sync with `html.theme-animate` duration in globals.css */
-const THEME_ANIM_MS = 280;
+/** Keep in sync with theme transition durations in globals.css */
+const THEME_ANIM_MS = 300;
+
+function prefersFinePointer() {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
 
 /**
- * One-click light/dark switch. Content stays visible; theme colours
- * crossfade via CSS custom properties (no covering overlay).
+ * One-click light/dark switch. Content stays visible.
+ * Desktop: CSS custom-property crossfade.
+ * Mobile: simple background/text fade (Safari @property morphs are buggy).
  */
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -28,22 +33,40 @@ export function ThemeToggle() {
 
     const next = isDark ? "light" : "dark";
     const root = document.documentElement;
-    const prefersReduced = window.matchMedia(
+    const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (prefersReduced) {
+    const applyTheme = () => {
+      root.classList.toggle("dark", next === "dark");
+      root.style.colorScheme = next;
       setTheme(next);
+    };
+
+    if (reduced) {
+      applyTheme();
       return;
     }
 
     busyRef.current = true;
+
+    // Mobile / touch: avoid @property interpolation (janky/broken on iOS).
+    // Fade only background + text via normal CSS transitions.
+    if (!prefersFinePointer()) {
+      root.classList.add("theme-animate-mobile");
+      void root.offsetWidth;
+      applyTheme();
+      window.setTimeout(() => {
+        root.classList.remove("theme-animate-mobile");
+        busyRef.current = false;
+      }, THEME_ANIM_MS + 40);
+      return;
+    }
+
+    // Desktop: full token crossfade.
     root.classList.add("theme-animate");
-    // Let the browser register transitions, then flip via next-themes only
-    // (avoid also mutating `.dark` manually — that double-applies and stutters).
-    requestAnimationFrame(() => {
-      setTheme(next);
-    });
+    void root.offsetWidth;
+    applyTheme();
 
     window.setTimeout(() => {
       root.classList.remove("theme-animate");
@@ -53,6 +76,7 @@ export function ThemeToggle() {
 
   return (
     <Button
+      type="button"
       variant="ghost"
       size="icon"
       onClick={toggle}
@@ -61,7 +85,7 @@ export function ThemeToggle() {
           ? `Switch to ${isDark ? "light" : "dark"} mode`
           : "Toggle theme"
       }
-      className="theme-toggle relative overflow-hidden border border-transparent hover:border-border"
+      className="theme-toggle relative touch-manipulation overflow-hidden border border-transparent hover:border-border"
     >
       <Sun
         className={cn(
