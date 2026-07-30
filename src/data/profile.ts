@@ -13,7 +13,8 @@ export const profile: Profile = {
   location: "Colombo, Sri Lanka",
   email: "nivethith.16@gmail.com",
   availability: "Available for hire",
-  resumeUrl: "/resume.pdf",
+  resumeUrl:
+    "https://cnkrxtqeyfgtmdakzuzi.supabase.co/storage/v1/object/public/documents/resume.pdf",
   socials: [
     {
       label: "GitHub",
@@ -35,7 +36,7 @@ export const profile: Profile = {
     },
     {
       label: "Resume",
-      href: "/resume.pdf",
+      href: "https://cnkrxtqeyfgtmdakzuzi.supabase.co/storage/v1/object/public/documents/resume.pdf",
       icon: FileText,
       handle: "Download PDF",
     },

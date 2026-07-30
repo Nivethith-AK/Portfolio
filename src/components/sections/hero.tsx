@@ -192,7 +192,11 @@ export function Hero() {
             </Magnetic>
             <Magnetic strength={0.25}>
               <Button asChild variant="secondary" size="lg">
-                <a href={profile.resumeUrl} download>
+                <a
+                  href={profile.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Download className="size-4" />
                   Download resume
                 </a>

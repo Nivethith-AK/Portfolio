@@ -28,7 +28,12 @@ export function Contact() {
                       href={social.href}
                       target={isExternal ? "_blank" : undefined}
                       rel={isExternal ? "noopener noreferrer" : undefined}
-                      download={social.label === "Resume" ? true : undefined}
+                      download={
+                        social.label === "Resume" &&
+                        !social.href.startsWith("http")
+                          ? true
+                          : undefined
+                      }
                       className="group flex items-center justify-between gap-4 py-4 transition-colors hover:text-primary"
                     >
                       <span className="flex items-center gap-3">
