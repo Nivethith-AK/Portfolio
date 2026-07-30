@@ -26,12 +26,14 @@ export function Contact() {
                   <li key={social.label}>
                     <a
                       href={social.href}
-                      target={isExternal ? "_blank" : undefined}
-                      rel={isExternal ? "noopener noreferrer" : undefined}
-                      download={
-                        social.label === "Resume" &&
-                        !social.href.startsWith("http")
-                          ? true
+                      target={
+                        isExternal && social.label !== "Resume"
+                          ? "_blank"
+                          : undefined
+                      }
+                      rel={
+                        isExternal && social.label !== "Resume"
+                          ? "noopener noreferrer"
                           : undefined
                       }
                       className="group flex items-center justify-between gap-4 py-4 transition-colors hover:text-primary"

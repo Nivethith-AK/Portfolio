@@ -127,8 +127,6 @@ export function Footer() {
               <li>
                 <a
                   href={profile.resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="group inline-flex min-h-11 items-center gap-2 py-2 text-foreground/80 transition-colors hover:text-primary"
                 >
                   <FileText className="size-3.5 shrink-0 opacity-70" aria-hidden />

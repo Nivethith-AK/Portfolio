@@ -14,7 +14,7 @@ export const profile: Profile = {
   email: "nivethith.16@gmail.com",
   availability: "Available for hire",
   resumeUrl:
-    "https://cnkrxtqeyfgtmdakzuzi.supabase.co/storage/v1/object/public/documents/resume.pdf",
+    "https://cnkrxtqeyfgtmdakzuzi.supabase.co/storage/v1/object/public/documents/resume.pdf?download=Nivethith-Arasakumar-Resume.pdf",
   socials: [
     {
       label: "GitHub",
@@ -36,7 +36,7 @@ export const profile: Profile = {
     },
     {
       label: "Resume",
-      href: "https://cnkrxtqeyfgtmdakzuzi.supabase.co/storage/v1/object/public/documents/resume.pdf",
+      href: "https://cnkrxtqeyfgtmdakzuzi.supabase.co/storage/v1/object/public/documents/resume.pdf?download=Nivethith-Arasakumar-Resume.pdf",
       icon: FileText,
       handle: "Download PDF",
     },
