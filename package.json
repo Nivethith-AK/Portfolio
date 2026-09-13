@@ -12,6 +12,7 @@
   "dependencies": {
     "@fontsource/geist-sans": "^5.2.5",
     "@gsap/react": "^2.1.2",
+    "@supabase/supabase-js": "^2.116.0",
     "@types/three": "^0.185.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

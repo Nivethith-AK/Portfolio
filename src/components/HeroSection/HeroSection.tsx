@@ -212,7 +212,7 @@ export const HeroSection = () => {
                       NA-2026-PRO
                     </span>
                     <span className="text-muted-foreground font-semibold text-[9px] uppercase tracking-wider">
-                      LIGHTSWIND UI
+                      PORTFOLIO
                     </span>
                   </div>
                 </div>
