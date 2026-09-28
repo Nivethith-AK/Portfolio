@@ -16,6 +16,30 @@ export const HeroSection = () => {
     "mailto:nivethith.16@gmail.com",
   ];
 
+  const handleDownloadResume = async () => {
+    try {
+      const response = await fetch(profile.resumeUrl);
+      if (!response.ok) throw new Error("Fetch failed");
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "Nivethith_Arasakumar_Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch {
+      // Fallback: direct download using same-origin /resume.pdf
+      const link = document.createElement("a");
+      link.href = "/resume.pdf";
+      link.download = "Nivethith_Arasakumar_Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   return (
     <section id="hero" className="relative min-h-[100vh] flex flex-col pt-12 md:pt-16 overflow-hidden bg-background">
       {/* Background Dot Pattern with Radial Vignette Shade */}
@@ -99,7 +123,7 @@ export const HeroSection = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              onClick={() => window.open(profile.resumeUrl, "_blank")}
+              onClick={handleDownloadResume}
               className="rounded-full px-7 h-12 glass-panel text-foreground font-semibold flex items-center gap-2 hover:bg-foreground/10 transition-all hover:-translate-y-1 border-foreground/10 cursor-pointer"
             >
               Resume <Download className="w-4 h-4" />
