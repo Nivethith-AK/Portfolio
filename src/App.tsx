@@ -10,7 +10,6 @@ import { CareerTimeline } from "./components/CareerSection/CareerTimeline";
 import TestimonialsSection from "./components/TestimonialsSection/TestimonialsSection";
 import { ContactSection } from "./components/ContactSection/ContactSection";
 import { Footer } from "./components/Footer/Footer";
-import { LoadingScreen } from "./components/LoadingScreen/LoadingScreen";
 import ReactLenis from "lenis/react";
 import { Home, User, GraduationCap, Briefcase, FolderKanban, Send, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,7 +19,6 @@ import { SmoothCursor } from "./components/lightswind/smooth-cursor";
 
 function App() {
   const [showDock, setShowDock] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -61,11 +59,6 @@ function App() {
 
   return (
     <div className="bg-transparent min-h-screen relative overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground">
-      {/* Animate-UI Inspired Motion Loading Screen */}
-      <AnimatePresence>
-        {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
-      </AnimatePresence>
-
       <SmoothCursor glowEffect showTrail trailLength={4} />
       <ReactLenis root options={{ smoothWheel: true, duration: 1.2 }}>
         <Header />
