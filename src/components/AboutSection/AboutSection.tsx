@@ -34,9 +34,6 @@ export const AboutSection = () => {
         viewport={{ once: true, amount: 0.2 }}
       >
         <div className="flex-1 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider">
-            <span>Engineering Identity</span>
-          </div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
             Architecting <span className="text-gradient-primary">Intelligent Systems</span>
           </h2>

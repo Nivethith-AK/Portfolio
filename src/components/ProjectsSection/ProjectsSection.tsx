@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Github, ExternalLink, Sparkles } from "lucide-react";
+import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import { projects, type Project } from "../../data/projects";
 
 type CategoryFilter = "All" | "AI & ML" | "Client Work" | "3D & Interactive" | "Web Systems";
@@ -31,10 +31,6 @@ export const ProjectsSection = () => {
         className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
       >
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Engineered Systems</span>
-          </div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-3">
             Selected <span className="text-gradient-primary">Works</span>
           </h2>
