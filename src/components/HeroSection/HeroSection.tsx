@@ -6,6 +6,7 @@ import { Badge } from "../lightswind/badge";
 import { HangingIdCard } from "../lightswind/HangingIdCard";
 import { AuroraTextEffect } from "../lightswind/aurora-text-effect";
 import { DotPattern } from "../lightswind/dot-pattern";
+import { profile } from "../../data/profile";
 
 export const HeroSection = () => {
   const socialHrefs = [
@@ -98,7 +99,7 @@ export const HeroSection = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              onClick={() => window.open("/resume.pdf", "_blank")}
+              onClick={() => window.open(profile.resumeUrl, "_blank")}
               className="rounded-full px-7 h-12 glass-panel text-foreground font-semibold flex items-center gap-2 hover:bg-foreground/10 transition-all hover:-translate-y-1 border-foreground/10 cursor-pointer"
             >
               Resume <Download className="w-4 h-4" />

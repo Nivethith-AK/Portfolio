@@ -4,10 +4,10 @@ import { Award, Rocket, Calendar, GraduationCap, CheckCircle2, Cpu, BarChart3, L
 import { skillCategories } from "../../data/skills";
 
 const stats = [
-  { icon: <Award className="w-5 h-5" />, label: "Certifications", value: "3" },
+  { icon: <Award className="w-5 h-5" />, label: "Certifications", value: "4" },
   { icon: <Rocket className="w-5 h-5" />, label: "Production Deployments", value: "10+" },
   { icon: <Calendar className="w-5 h-5" />, label: "Building Since", value: "2022" },
-  { icon: <GraduationCap className="w-5 h-5" />, label: "Expected Graduation", value: "2028" },
+  { icon: <GraduationCap className="w-5 h-5" />, label: "Expected Graduation", value: "2029" },
 ];
 
 const categoryIcons: Record<string, React.ReactNode> = {

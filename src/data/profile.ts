@@ -37,7 +37,7 @@ export const profile: Profile = {
   location: "Colombo, Sri Lanka",
   email: "nivethith.16@gmail.com",
   availability: "Available for hire",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "https://cnkrxtqeyfgtmdakzuzi.supabase.co/storage/v1/object/public/documents/resume.pdf",
   socials: [
     {
       label: "GitHub",
@@ -59,7 +59,7 @@ export const profile: Profile = {
 
 export const stats: Stat[] = [
   { label: "Production Deployments", value: "10+" },
-  { label: "Professional Certifications", value: "3" },
+  { label: "Professional Certifications", value: "4" },
   { label: "Building Since", value: "2022" },
-  { label: "Expected Graduation", value: "2028" },
+  { label: "Expected Graduation", value: "2029" },
 ];
