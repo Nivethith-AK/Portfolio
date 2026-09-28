@@ -27,13 +27,13 @@ export const profile: Profile = {
   name: "Nivethith Arasakumar",
   firstName: "Nivethith",
   initials: "NA",
-  role: "Aspiring AI, ML & Data Science Engineer",
-  subRole: "AI & ML Engineer · Data Scientist",
-  headline: "I build systems, not just models.",
+  role: "AI & Data Science Enthusiast | AI Solutions Architect — Aspiring",
+  subRole: "AI Solutions Architect (Aspiring) · Data Scientist",
+  headline: "Bridging intelligent algorithms with production-grade engineering.",
   intro:
-    "I'm a Computer Science undergraduate and AI & ML Engineer focused on high-performance ML and data architecture. I care about the whole system around a model — from C++ and Python internals to the data pipelines and interfaces that make it useful.",
+    "I'm a Computer Science undergraduate, AI & Data Science enthusiast, and aspiring AI Solutions Architect. I design and build end-to-end intelligent systems — from foundational machine learning and LLM orchestration to high-performance data architectures and immersive modern applications.",
   currentFocus:
-    "I'm working toward a career as a Data Scientist, AI Engineer, Machine Learning Engineer or DevOps Engineer — going deep on Python, C++, PyTorch, CUDA, cloud AI and scalable data systems along the way.",
+    "Architecting agentic workflows, autonomous data pipelines, and production full-stack systems with Python, PyTorch, LangGraph, FastAPI, Three.js, and modern cloud platforms.",
   location: "Colombo, Sri Lanka",
   email: "nivethith.16@gmail.com",
   availability: "Available for hire",
@@ -58,8 +58,8 @@ export const profile: Profile = {
 };
 
 export const stats: Stat[] = [
+  { label: "Production Deployments", value: "10+" },
   { label: "Professional Certifications", value: "3" },
-  { label: "Production Projects", value: "7+" },
   { label: "Building Since", value: "2022" },
   { label: "Expected Graduation", value: "2028" },
 ];

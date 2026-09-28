@@ -11,27 +11,34 @@ export const careerEvents: CareerEvent[] = [
     title: "Started Computer Science Degree",
     subtitle: "University of Westminster / IIT Colombo",
     description:
-      "Began reading for a BSc (Hons) in Computer Science, quickly gravitating toward data structures, system internals, high-performance computing, and intelligent systems.",
+      "Began reading for a BSc (Hons) in Computer Science, focusing on software architecture, data structures, high-performance computing, and distributed systems.",
   },
   {
     year: "2025",
     title: "Certified in AI, ML & Data Science",
-    subtitle: "Microsoft & IBM Professional Programs",
+    subtitle: "Microsoft & IBM Professional Credentials",
     description:
-      "Earned the Microsoft AI & ML Engineering and IBM Data Science Professional certifications. Dove deep into PyTorch, deep learning, cloud AI solutions, and full-stack interactive platforms.",
+      "Earned the Microsoft AI & ML Engineering Specialization and IBM Data Science Professional Certificate. Specialized in deep learning, PyTorch, cloud AI solutions, and predictive analytics.",
+  },
+  {
+    year: "2025 - 2026",
+    title: "Client Platforms & 3D Interactive Web",
+    subtitle: "Dolphin Beach Villa · ADW Trust · Table Linens",
+    description:
+      "Engineered production web platforms for prominent organizations: Dolphin Beach Villa (3D luxury sanctuary with Three.js/R3F, GSAP & AI assistant), ADW Trust (official humanitarian platform with impact metrics), and Table Linens (bespoke hospitality e-commerce with Supabase).",
   },
   {
     year: "2026",
-    title: "Architecting Autonomous & Real-Time Systems",
+    title: "Architecting Autonomous AI & Intelligent Systems",
     subtitle: "Syntrix AI · LURZ AI · CVForge",
     description:
-      "Designed and shipped production-grade AI platforms: Syntrix AI (multi-agent autonomous ML pipeline with SHAP explainability), LURZ AI (live financial market intelligence streaming), and CVForge (Gemini-powered ATS scoring system).",
+      "Designed and deployed production-grade AI platforms: Syntrix AI (multi-agent autonomous ML pipeline with SHAP explainability), LURZ AI (live financial market intelligence streaming), and CVForge (Gemini-powered ATS scoring system).",
   },
   {
     year: "Next",
-    title: "Toward AI, ML & DevOps Engineering",
-    subtitle: "Future Ambitions & Impact",
+    title: "Toward AI Solutions Architecture",
+    subtitle: "Scalable Enterprise AI & Intelligent Workflows",
     description:
-      "Targeting roles as a Data Scientist, AI Engineer, Machine Learning Engineer, or DevOps Engineer — building resilient, high-throughput systems that bridge cutting-edge models with real-world users.",
+      "Targeting roles as an AI Solutions Architect, AI/ML Engineer, or Data Scientist — designing resilient multi-agent systems, real-time data pipelines, and production machine learning infrastructure.",
   },
 ];

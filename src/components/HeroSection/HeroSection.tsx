@@ -79,7 +79,7 @@ export const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            I build systems, not just models. Computer Science undergraduate and AI &amp; ML Engineer focused on high-performance ML, scalable data systems, and intelligent software.
+            Computer Science undergraduate and aspiring AI Solutions Architect. Designing resilient end-to-end intelligent systems, autonomous multi-agent pipelines, and production full-stack platforms.
           </motion.p>
 
           <motion.div 
@@ -135,7 +135,7 @@ export const HeroSection = () => {
         >
           <HangingIdCard
             name="Nivethith Arasakumar"
-            role="AI & ML Engineer"
+            role="AI Solutions Architect (Aspiring)"
             badgeId="NA-2026-PRO"
             accentColor="#8b5cf6"
             ropeLength={75}
@@ -165,7 +165,7 @@ export const HeroSection = () => {
                 <div>
                   <h3 className="text-xl font-extrabold tracking-tight text-foreground">Nivethith Arasakumar</h3>
                   <div className="inline-flex items-center gap-1.5 mt-1 px-3 py-0.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-semibold">
-                    <span>AI &amp; ML Engineer</span>
+                    <span>AI Solutions Architect (Aspiring)</span>
                   </div>
                 </div>
 
@@ -175,7 +175,7 @@ export const HeroSection = () => {
                 <div className="grid grid-cols-2 gap-2.5 w-full text-left bg-muted/40 p-3 rounded-xl border border-border/50">
                   <div>
                     <span className="text-muted-foreground block text-[9px] uppercase tracking-widest font-bold">Specialty</span>
-                    <span className="font-bold text-foreground text-xs">AI, ML &amp; Data Systems</span>
+                    <span className="font-bold text-foreground text-xs">AI Architecture &amp; Data Systems</span>
                   </div>
                   <div>
                     <span className="text-muted-foreground block text-[9px] uppercase tracking-widest font-bold">Location</span>

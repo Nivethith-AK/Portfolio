@@ -3,22 +3,22 @@ import { motion } from "framer-motion";
 const TestimonialsSection = () => {
   const testimonials = [
     {
-      name: "T-Villa Management",
-      role: "Mind Body & Soul Resort",
-      content: "Nivethith designed an exceptionally serene, luxury digital experience for our wellness resort in Sri Lanka. The visual pacing, responsive design, and attention to detail were outstanding.",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=compress&cs=tinysrgb&w=150"
+      name: "Dolphin Beach Villa",
+      role: "Luxury Beachfront Sanctuary",
+      content: "Nivethith elevated our resort's digital presence with a stunning 3D interactive web sanctuary. The smooth 60fps animations, Three.js visual environment, and bespoke booking flows captured our luxury identity perfectly.",
+      image: "/projects/dolphin-beach-villa.webp"
     },
     {
-      name: "Beta Trading Community",
-      role: "LURZ AI Platform",
-      content: "The real-time market data streaming and AI confidence scoring built by Nivethith provided an intuitive, high-speed workspace. The explainability behind every setup makes a huge difference.",
-      image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=compress&cs=tinysrgb&w=150"
+      name: "ADW Trust Board",
+      role: "Humanitarian Relief Organization",
+      content: "ADW Trust needed a transparent, highly accessible humanitarian platform to connect donors with our charitable missions across Sri Lanka. Nivethith delivered an impactful, fast, and emotionally resonant platform that our community relies on.",
+      image: "/projects/adw-trust.webp"
     },
     {
-      name: "Candidate Reviewer",
-      role: "CVForge Platform",
-      content: "The ATS resume analyzer and streaming Gemini feedback made resume optimization effortless. The clean interface and accurate ATS breakdown received praise from every test user.",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=compress&cs=tinysrgb&w=150"
+      name: "Table Linens Executive Team",
+      role: "Hospitality Linens Manufacturer",
+      content: "From our custom embroidery inquiry workflows to the high-performance Supabase catalog, Nivethith delivered an exquisite digital experience tailored to our international luxury hospitality clients.",
+      image: "/projects/tablelinens.webp"
     }
   ];
 
@@ -35,7 +35,7 @@ const TestimonialsSection = () => {
           Client <span className="text-gradient-primary">Testimonials</span>
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          Feedback from talented leaders I've had the pleasure of partnering with throughout my career.
+          Feedback from leadership teams and organizations I've engineered production platforms for.
         </p>
       </motion.div>
 
@@ -47,7 +47,7 @@ const TestimonialsSection = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.15, duration: 0.5 }}
-            className="glass-panel p-8 rounded-3xl border border-foreground/10 flex flex-col relative overflow-hidden group hover:border-primary/30 transition-colors duration-500"
+            className="glass-panel p-8 rounded-3xl border border-foreground/10 flex flex-col relative overflow-hidden group hover:border-primary/30 transition-colors duration-500 shadow-lg"
           >
             {/* Subtle glow orb */}
             <div className="absolute -right-10 -top-10 w-32 h-32 bg-primary/10 rounded-full blur-[40px] group-hover:bg-primary/20 transition-colors duration-500 pointer-events-none" />
@@ -59,12 +59,16 @@ const TestimonialsSection = () => {
               </svg>
             </div>
 
-            <p className="text-muted-foreground leading-relaxed flex-grow relative z-10 italic mb-8">
+            <p className="text-muted-foreground leading-relaxed flex-grow relative z-10 italic mb-8 text-sm md:text-base">
               "{test.content}"
             </p>
 
             <div className="flex items-center gap-4 relative z-10 mt-auto">
-              <img src={test.image} alt={test.name} className="w-12 h-12 rounded-full object-cover border border-foreground/10" />
+              <img 
+                src={test.image} 
+                alt={test.name} 
+                className="w-12 h-12 rounded-full object-cover border border-foreground/10 shadow-sm" 
+              />
               <div>
                 <h4 className="text-foreground font-bold text-sm">{test.name}</h4>
                 <p className="text-primary text-xs font-medium">{test.role}</p>
