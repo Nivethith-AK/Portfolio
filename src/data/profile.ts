@@ -33,7 +33,7 @@ export const profile: Profile = {
   intro:
     "I'm a Computer Science undergraduate, AI & Data Science enthusiast, and aspiring AI Solutions Architect. I design and build end-to-end intelligent systems — from foundational machine learning and LLM orchestration to high-performance data architectures and immersive modern applications.",
   currentFocus:
-    "Architecting agentic workflows, autonomous data pipelines, and production full-stack systems with Python, PyTorch, LangGraph, FastAPI, Three.js, and modern cloud platforms.",
+    "Building AutoZure (self-hosted visual workflow automation platform) alongside multi-agent data intelligence systems with Next.js 14, React Flow, BullMQ, LangGraph, and distributed cloud architecture.",
   location: "Colombo, Sri Lanka",
   email: "nivethith.16@gmail.com",
   availability: "Available for hire",
