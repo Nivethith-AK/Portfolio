@@ -26,9 +26,21 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!lenis) return;
+    if (isMobileMenuOpen) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+  }, [isMobileMenuOpen, lenis]);
+
   const handleNav = (href: string) => {
-    scrollToSection(href, lenis);
+    if (lenis && isMobileMenuOpen) {
+      lenis.start();
+    }
     setIsMobileMenuOpen(false);
+    scrollToSection(href, lenis);
   };
 
   return (
@@ -44,7 +56,11 @@ export default function Header() {
           {/* Left: Brand + Inline Nav */}
           <div className="flex items-center gap-8 lg:gap-10">
             <a
-              onClick={() => handleNav("#hero")}
+              href="#hero"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNav("#hero");
+              }}
               className="flex items-center gap-2.5 cursor-pointer group select-none"
             >
               <div className="w-9 h-9 rounded-xl bg-[#3458ff] p-[2px] flex items-center justify-center shadow-sm overflow-hidden group-hover:scale-105 transition-transform">
@@ -63,7 +79,11 @@ export default function Header() {
               {navItems.map((item) => (
                 <a
                   key={item.name}
-                  onClick={() => handleNav(item.href)}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav(item.href);
+                  }}
                   className="text-[14.5px] font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                 >
                   {item.name}
@@ -129,10 +149,14 @@ export default function Header() {
               {[...navItems, { name: "Contact", href: "#contact" }].map((item, idx) => (
                 <motion.a
                   key={item.name}
+                  href={item.href}
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.04 * idx }}
-                  onClick={() => handleNav(item.href)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav(item.href);
+                  }}
                   className="text-3xl font-semibold tracking-[-0.03em] text-foreground hover:text-[#3458ff] transition-colors cursor-pointer"
                 >
                   {item.name}

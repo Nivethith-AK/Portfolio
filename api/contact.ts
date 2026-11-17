@@ -1,6 +1,23 @@
 ﻿import { createClient } from "@supabase/supabase-js";
 
-export default async function handler(req: any, res: any) {
+interface ApiRequest {
+  method?: string;
+  body?: {
+    name?: string;
+    email?: string;
+    message?: string;
+  };
+}
+
+interface ApiResponse {
+  setHeader(name: string, value: string): void;
+  status(code: number): {
+    end(): void;
+    json(data: Record<string, unknown>): void;
+  };
+}
+
+export default async function handler(req: ApiRequest, res: ApiResponse) {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS,PATCH,DELETE,POST,PUT");
@@ -98,8 +115,9 @@ export default async function handler(req: any, res: any) {
       emailSent,
       message: "Message received successfully!",
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Contact handler error:", error);
-    return res.status(500).json({ ok: false, error: error?.message || "Internal server error" });
+    const message = error instanceof Error ? error.message : "Internal server error";
+    return res.status(500).json({ ok: false, error: message });
   }
 }

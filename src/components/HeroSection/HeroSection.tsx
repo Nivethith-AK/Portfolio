@@ -47,7 +47,7 @@ export const HeroSection = () => {
           className="pointer-events-none select-none w-full text-center absolute top-4 md:top-8 left-0 right-0 z-0 overflow-hidden"
         >
           <span
-            className="block font-extrabold uppercase tracking-[-0.04em] leading-none text-[clamp(4.25rem,14.5vw,11.5rem)] bg-gradient-to-b from-white/80 via-white/30 to-transparent dark:from-white/15 dark:via-white/5 dark:to-transparent bg-clip-text text-transparent"
+            className="block font-extrabold uppercase tracking-[-0.04em] leading-none text-[clamp(3rem,13.5vw,11.5rem)] bg-gradient-to-b from-white/80 via-white/30 to-transparent dark:from-white/15 dark:via-white/5 dark:to-transparent bg-clip-text text-transparent"
           >
             ARCHITECT
           </span>

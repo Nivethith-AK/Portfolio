@@ -28,11 +28,16 @@ export const FaqSection = () => {
   const [openIndex, setOpenIndex] = useState<number>(0);
   const lenis = useLenis();
 
+  const toggleItem = (idx: number) => {
+    setOpenIndex((prev) => (prev === idx ? -1 : idx));
+    window.setTimeout(() => lenis?.resize(), 300);
+  };
+
   return (
     <section id="faq" className="scroll-mt-20 w-full bg-background pt-20 md:pt-28 pb-16">
       <div className="max-w-[1140px] mx-auto px-5 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Blue Glow CTA Card (matching Portfon FAQ Card) */}
+          {/* Left Blue Glow CTA Card (matching Portfon FAQ Card with high contrast) */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -40,20 +45,20 @@ export const FaqSection = () => {
             transition={{ duration: 0.55 }}
             className="lg:col-span-5 rounded-[24px] p-8 sm:p-10 text-center flex flex-col items-center justify-center relative overflow-hidden min-h-[340px] border border-[var(--border)] bg-card"
           >
-            {/* Electric Blue Center Ambient Mesh Glow */}
+            {/* Electric Blue Upper Ambient Gradient + Soft Radial Mesh */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 w-[360px] h-[280px] rounded-full blur-[55px] opacity-80"
+              className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "radial-gradient(circle, #3458ff 0%, #7d96ff 55%, transparent 100%)",
+                  "radial-gradient(125% 95% at 50% 24%, #2e52ff 0%, #5c7aff 52%, rgba(92,122,255,0.16) 82%, transparent 100%)",
               }}
             />
 
             <div className="relative z-10 flex flex-col items-center">
               <SectionEyebrow label="FAQ Questions" light centered />
 
-              <h2 className="mt-4 mb-7 text-2xl sm:text-[1.95rem] font-medium tracking-[-0.03em] leading-[1.14] text-white drop-shadow-sm max-w-xs">
+              <h2 className="mt-4 mb-7 text-2xl sm:text-[1.95rem] font-medium tracking-[-0.03em] leading-[1.14] text-white drop-shadow-[0_2px_12px_rgba(3,35,109,0.28)] max-w-xs">
                 Got questions about working together?
               </h2>
 
@@ -78,7 +83,7 @@ export const FaqSection = () => {
                 >
                   <button
                     type="button"
-                    onClick={() => setOpenIndex(isOpen ? -1 : idx)}
+                    onClick={() => toggleItem(idx)}
                     className="w-full flex items-center justify-between gap-4 text-left"
                     aria-expanded={isOpen}
                   >

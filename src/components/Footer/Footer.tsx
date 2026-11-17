@@ -25,7 +25,7 @@ export const Footer = () => {
       {/* Top Soft Blend Seam from Page Background into Royal Navy */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-background/85 via-background/20 to-transparent z-0"
+        className="pointer-events-none absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-background via-background/60 to-transparent z-0"
       />
 
       {/* Ambient Cobalt Glow */}
@@ -68,7 +68,11 @@ export const Footer = () => {
             return (
               <a
                 key={tile.name}
-                onClick={() => scrollToSection(tile.href, lenis)}
+                href={tile.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(tile.href, lenis);
+                }}
                 className="group rounded-2xl p-4 sm:p-5 bg-white/[0.04] border border-white/20 hover:bg-white/10 hover:border-white/40 transition-all cursor-pointer flex flex-col justify-between min-h-[104px]"
               >
                 <span className="w-7 h-7 rounded-lg bg-white text-[#03236d] flex items-center justify-center group-hover:scale-105 transition-transform">

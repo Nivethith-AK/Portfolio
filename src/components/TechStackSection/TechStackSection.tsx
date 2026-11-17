@@ -1,5 +1,7 @@
 import { marqueeTechnologies } from "../../data/skills";
 
+const DARK_INVERT_TECHS = new Set(["Next.js", "Three.js"]);
+
 const TechStackSection = () => {
   return (
     <div className="w-full py-5 border-y border-[var(--border)] bg-[var(--surface-soft)]/60 overflow-hidden relative">
@@ -16,7 +18,9 @@ const TechStackSection = () => {
               <img
                 src={tech.icon}
                 alt={tech.name}
-                className="w-4 h-4 object-contain"
+                className={`w-4 h-4 object-contain ${
+                  DARK_INVERT_TECHS.has(tech.name) ? "dark:invert" : ""
+                }`}
                 loading="lazy"
               />
               <span>{tech.name}</span>

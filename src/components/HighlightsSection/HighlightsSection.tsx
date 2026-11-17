@@ -25,7 +25,7 @@ const highlights = [
 
 export const HighlightsSection = () => {
   return (
-    <section id="highlights" className="w-full bg-background pt-14 pb-20">
+    <section id="highlights" className="scroll-mt-20 w-full bg-background pt-14 pb-20">
       <div className="max-w-[1140px] mx-auto px-5 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -57,7 +57,7 @@ export const HighlightsSection = () => {
                 <img
                   src={item.image}
                   alt={item.title}
-                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 />
                 <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/70 text-white text-[11px] font-medium backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center gap-1">

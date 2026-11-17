@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'lenis/dist/lenis.css';
 @plugin 'lightswind/plugin';
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -52,7 +53,6 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     font-family: var(--font-sans);
   }
 

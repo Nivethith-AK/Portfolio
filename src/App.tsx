@@ -35,7 +35,7 @@ function App() {
             {/* Soft Top Edge Transition from Page Background */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-background via-background/35 to-transparent z-0"
+              className="pointer-events-none absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background via-background/65 to-transparent z-0"
             />
 
             {/* Radial Cobalt Depth Glows */}
@@ -55,7 +55,7 @@ function App() {
             {/* Soft Bottom Edge Transition back to Page Background */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-background via-background/35 to-transparent z-0"
+              className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/65 to-transparent z-0"
             />
           </div>
 
