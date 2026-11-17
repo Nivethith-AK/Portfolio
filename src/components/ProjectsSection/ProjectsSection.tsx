@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
+import { Github, ChevronDown, ChevronUp } from "lucide-react";
 import { projects, type Project } from "../../data/projects";
+import { PortfonButton, SectionEyebrow } from "../PortfonUI";
 
 type CategoryFilter = "All" | "AI & ML" | "Client Work" | "3D & Interactive" | "Web Systems";
 
@@ -15,169 +16,189 @@ const categories: CategoryFilter[] = [
 
 export const ProjectsSection = () => {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("All");
+  const [showAllInAll, setShowAllInAll] = useState(false);
 
-  const filteredProjects = activeCategory === "All"
-    ? projects
-    : projects.filter((p) => p.category === activeCategory);
+  const categoryFiltered =
+    activeCategory === "All"
+      ? projects
+      : projects.filter((p) => p.category === activeCategory);
+
+  const displayedProjects =
+    activeCategory === "All" && !showAllInAll
+      ? categoryFiltered.slice(0, 6)
+      : categoryFiltered;
 
   return (
-    <section id="projects" className="w-full max-w-7xl mx-auto px-6 py-24">
-      {/* Section Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8 }}
-        className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
-      >
-        <div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-3">
-            Selected <span className="text-gradient-primary">Works</span>
+    <section id="projects" className="scroll-mt-20 w-full bg-background pt-20 md:pt-28 pb-24 md:pb-32">
+      <div className="max-w-[1140px] mx-auto px-5 md:px-6">
+        {/* Centered Header (matching Portfon Portfolio Header) */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto mb-10 md:mb-12"
+        >
+          <SectionEyebrow label="My Portfolio" centered />
+          <h2 className="mt-3 text-[2.25rem] sm:text-[2.75rem] md:text-[3.1rem] font-medium tracking-[-0.04em] leading-[1.08] text-foreground">
+            Projects That Delivered Real Impact
           </h2>
-          <p className="text-muted-foreground max-w-2xl text-base md:text-lg">
-            A portfolio of production AI platforms, client applications, and 3D interactive web experiences built with modern architecture.
-          </p>
-        </div>
+        </motion.div>
 
-        {/* Category Filter Tabs with Sliding Active Pill (Animate UI pattern) */}
-        <div className="flex flex-wrap gap-1.5 p-1.5 bg-foreground/[0.04] dark:bg-foreground/[0.06] rounded-2xl border border-foreground/10 self-start md:self-auto">
-          {categories.map((category) => {
-            const isActive = activeCategory === category;
+        {/* Clean Portfon Pill Filter Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
+          {categories.map((cat) => {
+            const active = activeCategory === cat;
             return (
               <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`relative px-4 py-2 rounded-xl text-xs md:text-sm font-medium transition-colors cursor-pointer select-none ${
-                  isActive
-                    ? "text-primary-foreground font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
+                key={cat}
+                type="button"
+                onClick={() => setActiveCategory(cat)}
+                className={`relative px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors ${
+                  active
+                    ? "text-white"
+                    : "text-muted-foreground hover:text-foreground bg-card border border-[var(--border)]"
                 }`}
               >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeFilterPill"
-                    className="absolute inset-0 bg-primary rounded-xl shadow-md"
-                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                {active && (
+                  <motion.span
+                    layoutId="portfonProjectFilter"
+                    transition={{ type: "spring", stiffness: 360, damping: 30 }}
+                    className="absolute inset-0 rounded-full bg-[#3458ff] shadow-sm"
                   />
                 )}
-                <span className="relative z-10">{category}</span>
+                <span className="relative z-10">{cat}</span>
               </button>
             );
           })}
         </div>
-      </motion.div>
 
-      {/* Bento Grid */}
-      <motion.div 
-        layout
-        className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full"
-      >
-        <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project: Project, i: number) => {
-            const primaryLink = project.demoUrl || project.githubUrl || "#";
-            const gridSpan = activeCategory === "All" 
-              ? (project.gridClass || "md:col-span-6 h-[400px]")
-              : "md:col-span-6 h-[400px]";
+        {/* Portfon Large Showcase Project Cards */}
+        <div className="space-y-8">
+          <AnimatePresence mode="popLayout">
+            {displayedProjects.map((project: Project, index: number) => {
+              const primaryHref = project.demoUrl || project.githubUrl || "#";
+              const numLabel = String(index + 1).padStart(2, "0");
 
-            return (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className={`group relative overflow-hidden rounded-[2rem] block shadow-xl border border-foreground/10 bg-neutral-950 ${gridSpan}`}
-              >
-                {/* Background Image Container */}
-                <div className="absolute inset-0 bg-neutral-950">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-75 group-hover:opacity-90 transform-gpu"
-                  />
-                  {/* Subtle Dark Gradient Overlay for Maximum Readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/20 pointer-events-none" />
-                </div>
+              return (
+                <motion.article
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  viewport={{ once: true, amount: 0.12 }}
+                  transition={{ duration: 0.5 }}
+                  className="portfon-card p-6 sm:p-8 md:p-10 shadow-[0_8px_30px_rgba(16,16,16,0.03)] hover:shadow-[0_16px_44px_rgba(52,88,255,0.08)] transition-shadow duration-300"
+                >
+                  {/* Top Title + Large Number Index */}
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#3458ff]/10 text-[#3458ff]">
+                          {project.badge || project.category}
+                        </span>
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {project.year}
+                        </span>
+                      </div>
+                      <h3 className="text-2xl sm:text-3xl md:text-[2rem] font-medium tracking-[-0.03em] text-foreground">
+                        {project.title}
+                      </h3>
+                    </div>
 
-                {/* Top Badges */}
-                <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-20 pointer-events-none">
-                  <span className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase bg-black/60 backdrop-blur-md border border-white/15 text-white/90 shadow-sm">
-                    {project.badge || project.category}
-                  </span>
-                  <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-black/50 backdrop-blur-md border border-white/10 text-white/70">
-                    {project.year}
-                  </span>
-                </div>
+                    <span className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-[-0.04em] text-foreground/15 select-none leading-none">
+                      {numLabel}
+                    </span>
+                  </div>
 
-                {/* Bottom Content Area */}
-                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
-                  <div className="flex items-end justify-between gap-4">
-                    <div className="max-w-xl">
-                      {/* Tech Stack Pills */}
-                      <div className="flex flex-wrap gap-1.5 mb-3 opacity-90 group-hover:opacity-100 transition-opacity">
-                        {project.techStack.slice(0, 4).map((tech, idx) => (
+                  {/* Description & Actions Row */}
+                  <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-7">
+                    <div className="max-w-xl space-y-4">
+                      <p className="text-sm sm:text-[15px] leading-relaxed text-muted-foreground">
+                        {project.description || project.subtitle}
+                      </p>
+
+                      {/* Clean Tech Pills */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.techStack.slice(0, 6).map((tech) => (
                           <span
-                            key={idx}
-                            className="px-2.5 py-0.5 rounded-md text-[10px] md:text-[11px] font-mono bg-white/10 backdrop-blur-md border border-white/15 text-white/90"
+                            key={tech}
+                            className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[var(--surface-soft)] border border-[var(--border)] text-foreground/80"
                           >
                             {tech}
                           </span>
                         ))}
-                        {project.techStack.length > 4 && (
-                          <span className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/10 backdrop-blur-md border border-white/10 text-white/60">
-                            +{project.techStack.length - 4}
-                          </span>
-                        )}
                       </div>
-
-                      {/* Project Title */}
-                      <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-2 tracking-tight drop-shadow-md">
-                        {project.title}
-                      </h3>
-
-                      {/* Subtitle / Description */}
-                      <p className="text-xs md:text-sm text-neutral-300 line-clamp-2 leading-relaxed font-normal">
-                        {project.subtitle}
-                      </p>
                     </div>
 
-                    {/* Action Links */}
-                    <div className="flex items-center gap-2 shrink-0">
+                    <div className="flex items-center gap-2.5 shrink-0">
                       {project.githubUrl && (
                         <a
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`View ${project.title} source code on GitHub`}
-                          className="w-10 h-10 rounded-full bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all shadow-md hover:scale-105 cursor-pointer"
+                          aria-label={`${project.title} on GitHub`}
+                          className="w-11 h-11 rounded-full bg-[var(--surface-soft)] border border-[var(--border)] flex items-center justify-center text-foreground hover:border-[#3458ff] hover:text-[#3458ff] transition-colors"
                         >
                           <Github className="w-4 h-4" />
                         </a>
                       )}
-                      <a
-                        href={primaryLink}
+
+                      <PortfonButton
+                        href={primaryHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Open ${project.title}`}
-                        className="w-11 h-11 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-all shadow-lg hover:scale-105 cursor-pointer"
+                        size="md"
                       >
-                        {project.demoUrl ? (
-                          <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
-                        ) : (
-                          <ExternalLink className="w-4 h-4" />
-                        )}
-                      </a>
+                        {project.demoUrl ? "Explore Project" : "View Source"}
+                      </PortfonButton>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
-      </motion.div>
+
+                  {/* Rounded Full-Width Project Image Container */}
+                  <a
+                    href={primaryHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block relative rounded-2xl overflow-hidden bg-[var(--surface-soft)] border border-[var(--border)] aspect-[16/9] md:aspect-[16/7.8]"
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                  </a>
+                </motion.article>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+
+        {/* Expand/Collapse for Remaining Projects in All View */}
+        {activeCategory === "All" && projects.length > 6 && (
+          <div className="mt-10 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAllInAll((prev) => !prev)}
+              className="px-6 py-3 rounded-full bg-card border border-[var(--border)] text-sm font-medium text-foreground inline-flex items-center gap-2 hover:border-[#3458ff] hover:text-[#3458ff] transition-colors shadow-sm"
+            >
+              <span>
+                {showAllInAll
+                  ? "Show Featured Projects (6)"
+                  : `View All Projects (${projects.length})`}
+              </span>
+              {showAllInAll ? (
+                <ChevronUp className="w-4 h-4" />
+              ) : (
+                <ChevronDown className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+        )}
+      </div>
     </section>
   );
 };

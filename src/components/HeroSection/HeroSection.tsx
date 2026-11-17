@@ -1,20 +1,12 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Github, Linkedin, Mail, Twitter } from "lucide-react";
-import TechStackSection from "../TechStackSection/TechStackSection";
-import { Button } from "../lightswind/button";
-import { Badge } from "../lightswind/badge";
-import { HangingIdCard } from "../lightswind/HangingIdCard";
-import { AuroraTextEffect } from "../lightswind/aurora-text-effect";
-import { DotPattern } from "../lightswind/dot-pattern";
+import { Download } from "lucide-react";
+import { useLenis } from "lenis/react";
 import { profile } from "../../data/profile";
+import { PortfonButton } from "../PortfonUI";
+import { scrollToSection } from "../../lib/smoothScroll";
 
 export const HeroSection = () => {
-  const socialHrefs = [
-    "https://x.com/Nivethith_AK",
-    "https://github.com/Nivethith-AK",
-    "https://linkedin.com/in/nivethith-ak",
-    "mailto:nivethith.16@gmail.com",
-  ];
+  const lenis = useLenis();
 
   const handleDownloadResume = async () => {
     try {
@@ -30,7 +22,6 @@ export const HeroSection = () => {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(blobUrl);
     } catch {
-      // Fallback: direct download using same-origin /resume.pdf
       const link = document.createElement("a");
       link.href = "/resume.pdf";
       link.download = "Nivethith_Arasakumar_Resume.pdf";
@@ -41,217 +32,160 @@ export const HeroSection = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-[100vh] flex flex-col pt-12 md:pt-16 overflow-hidden bg-background">
-      {/* Background Dot Pattern with Radial Vignette Shade */}
-      <DotPattern width={16} height={16} cx={1} cy={1} cr={1} glow />
-      
-      {/* Main Content Area */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex-1 flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 pb-12">
-        
-        {/* Left Content */}
-        <motion.div 
-          className="flex-1 flex flex-col items-center md:items-start text-center md:text-left pt-0"
-          initial={{ opacity: 0, y: 30 }}
+    <section
+      id="hero"
+      className="relative w-full overflow-hidden bg-[var(--hero-bg)] pt-28 md:pt-32 pb-12 md:pb-16 min-h-[820px] flex flex-col justify-between transition-colors duration-300"
+    >
+      {/* Top atmospheric backdrop & Giant Background Typography */}
+      <div className="relative max-w-[1140px] w-full mx-auto px-5 md:px-6 flex-1 flex flex-col items-center justify-end">
+        {/* Giant Background Wordmark behind Arch */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          aria-hidden="true"
+          className="pointer-events-none select-none w-full text-center absolute top-4 md:top-8 left-0 right-0 z-0 overflow-hidden"
         >
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="mb-6"
+          <span
+            className="block font-extrabold uppercase tracking-[-0.04em] leading-none text-[clamp(4.25rem,14.5vw,11.5rem)] bg-gradient-to-b from-white/80 via-white/30 to-transparent dark:from-white/15 dark:via-white/5 dark:to-transparent bg-clip-text text-transparent"
           >
-            <Badge variant="outline" size="lg" className="gap-2.5 py-1.5 px-4 glass-panel border-foreground/10">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-              </span>
-              <span className="text-xs font-medium text-muted-foreground">Available for work</span>
-            </Badge>
+            ARCHITECT
+          </span>
+        </motion.div>
+
+        {/* Centered Royal-Blue Arch + Portrait + Floating Discipline Pills */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96, y: 24 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 mt-10 md:mt-14 flex items-end justify-center w-full"
+        >
+          {/* Floating Angled Tag Left */}
+          <motion.div
+            initial={{ opacity: 0, x: -20, rotate: -22 }}
+            animate={{ opacity: 1, x: 0, rotate: -18 }}
+            transition={{ duration: 0.7, delay: 0.25 }}
+            className="hidden sm:inline-flex items-center px-4 py-1.5 rounded-full bg-white/95 dark:bg-[#1a2033]/95 text-[#101010] dark:text-white text-xs font-medium shadow-md border border-black/5 dark:border-white/10 absolute left-[8%] md:left-[22%] top-[36%] z-20"
+          >
+            AI Solutions
           </motion.div>
 
+          {/* Floating Angled Tag Right */}
+          <motion.div
+            initial={{ opacity: 0, x: 20, rotate: 20 }}
+            animate={{ opacity: 1, x: 0, rotate: 15 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="hidden sm:inline-flex items-center px-4 py-1.5 rounded-full bg-white/95 dark:bg-[#1a2033]/95 text-[#101010] dark:text-white text-xs font-medium shadow-md border border-black/5 dark:border-white/10 absolute right-[8%] md:right-[22%] top-[28%] z-20"
+          >
+            Full-Stack &amp; ML
+          </motion.div>
+
+          {/* Arch Backdrop */}
+          <div className="relative w-[280px] sm:w-[340px] md:w-[390px] h-[350px] sm:h-[410px] md:h-[450px] rounded-t-full overflow-hidden shadow-[0_-20px_80px_rgba(52,88,255,0.22)]">
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, #3458ff 0%, #6f89ff 58%, rgba(233,236,243,0) 100%)",
+              }}
+            />
+
+            {/* Portrait Avatar smoothly feathered into cobalt arch */}
+            <div className="relative w-full h-full flex items-end justify-center pt-10 px-4">
+              <div
+                className="w-[245px] sm:w-[285px] md:w-[320px] h-[290px] sm:h-[330px] md:h-[365px] rounded-t-full overflow-hidden"
+                style={{
+                  WebkitMaskImage:
+                    "radial-gradient(ellipse 78% 82% at 50% 45%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.85) 68%, rgba(0,0,0,0) 96%)",
+                  maskImage:
+                    "radial-gradient(ellipse 78% 82% at 50% 45%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.85) 68%, rgba(0,0,0,0) 96%)",
+                }}
+              >
+                <img
+                  src="/logo.jpg"
+                  alt="Nivethith Arasakumar"
+                  className="w-full h-full object-cover object-center scale-[1.04]"
+                  loading="eager"
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Bottom Editorial Lockup Row (Title Left + Glass Counters Right) */}
+        <div className="relative z-20 w-full -mt-14 md:-mt-20 flex flex-col md:flex-row md:items-end justify-between gap-8 pt-6">
+          {/* Left Identity + Headline + Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="mb-4 text-center md:text-left"
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="max-w-xl"
           >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-2">
-              Hi, I'm
+            <div className="inline-flex items-center gap-2 mb-3 text-sm font-medium text-foreground/80">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span>Hey, I’m {profile.firstName}</span>
+            </div>
+
+            <h1 className="text-[2.35rem] sm:text-[3.25rem] md:text-[4.15rem] font-semibold tracking-[-0.04em] leading-[1.05] text-foreground mb-6">
+              AI Solutions, Systems &amp; Full-Stack Design
             </h1>
-            
-            {/* Light Theme: Clean Vibrant Gradient Text */}
-            <div className="block dark:hidden">
-              <span className="bg-gradient-to-r from-violet-600 via-sky-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-extrabold text-[clamp(3rem,6.5vw,5.5rem)] leading-none tracking-tight block pb-2 select-none">
-                Nivethith
+
+            <div className="flex flex-wrap items-center gap-3">
+              <PortfonButton onClick={() => scrollToSection("#projects", lenis)} size="md">
+                Explore Work
+              </PortfonButton>
+
+              <button
+                type="button"
+                onClick={handleDownloadResume}
+                className="h-11 px-5 rounded-full bg-white/85 dark:bg-white/10 backdrop-blur-md border border-[var(--border)] text-foreground text-[14px] font-medium inline-flex items-center gap-2 hover:bg-white dark:hover:bg-white/15 hover:-translate-y-0.5 transition-all shadow-sm"
+              >
+                <Download className="w-4 h-4 text-[#3458ff]" />
+                <span>Resume</span>
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Right Translucent Metric Counters (matching Portfon Counter Wrapper) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="flex flex-col sm:flex-row md:flex-col items-stretch sm:items-center md:items-end gap-3"
+          >
+            <div className="glass-panel rounded-2xl px-5 py-3.5 shadow-sm flex items-center justify-between gap-6 min-w-[240px]">
+              <span className="text-xs font-medium text-muted-foreground leading-tight">
+                Production Platforms
+                <br />
+                Deployed Live
+              </span>
+              <span className="text-2xl font-semibold tracking-[-0.03em] text-foreground">
+                10+
               </span>
             </div>
 
-            {/* Dark Theme: Rich Lightswind Aurora Text Effect */}
-            <div className="hidden dark:block">
-              <AuroraTextEffect
-                text="Nivethith"
-                fontSize="clamp(3rem, 6.5vw, 5.5rem)"
-                className="bg-transparent overflow-visible p-0 justify-start"
-                textClassName="bg-gradient-to-r from-cyan-400 via-purple-400 to-sky-300 bg-clip-text text-transparent pb-2 font-extrabold"
-              />
+            <div className="glass-panel rounded-2xl px-5 py-3.5 shadow-sm flex items-center justify-between gap-6 min-w-[240px]">
+              <span className="text-xs font-medium text-muted-foreground leading-tight">
+                Microsoft &amp; IBM
+                <br />
+                Verified Credentials
+              </span>
+              <span className="text-2xl font-semibold tracking-[-0.03em] text-foreground">
+                4+
+              </span>
             </div>
           </motion.div>
-
-          <motion.p 
-            className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 leading-relaxed w-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-          >
-            Computer Science undergraduate and aspiring AI Solutions Architect. Designing resilient end-to-end intelligent systems, autonomous multi-agent pipelines, and production full-stack platforms.
-          </motion.p>
-
-          <motion.div 
-            className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-10 w-full md:w-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
-            <Button 
-              size="lg" 
-              onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-              className="rounded-full px-7 h-12 bg-primary text-primary-foreground font-semibold flex items-center gap-2 hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:-translate-y-1 cursor-pointer"
-            >
-              View Work <ArrowRight className="w-4 h-4" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              onClick={handleDownloadResume}
-              className="rounded-full px-7 h-12 glass-panel text-foreground font-semibold flex items-center gap-2 hover:bg-foreground/10 transition-all hover:-translate-y-1 border-foreground/10 cursor-pointer"
-            >
-              Resume <Download className="w-4 h-4" />
-            </Button>
-          </motion.div>
-
-          {/* Social Links */}
-          <motion.div 
-            className="flex items-center gap-5 justify-center md:justify-start w-full md:w-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-          >
-            {[Twitter, Github, Linkedin, Mail].map((Icon, i) => (
-              <a 
-                key={i} 
-                href={socialHrefs[i]} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-muted-foreground hover:text-foreground transition-colors hover:-translate-y-1 transform duration-200"
-              >
-                <Icon className="w-5 h-5" />
-              </a>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Right Content - Visual Hanging ID Card */}
-        <motion.div 
-          className="flex-1 w-full max-w-md relative flex justify-center items-center py-2"
-          initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <HangingIdCard
-            name="Nivethith Arasakumar"
-            role="AI Solutions Architect (Aspiring)"
-            badgeId="NA-2026-PRO"
-            accentColor="#8b5cf6"
-            ropeLength={75}
-            ropeColor="#27272a"
-            cardWidth="w-72 sm:w-80 md:w-84"
-          >
-            <div className="flex flex-col h-full bg-card w-full">
-              {/* Card Header Banner with Avatar */}
-              <div className="relative px-5 pt-7 pb-6 flex flex-col items-center bg-gradient-to-br from-purple-700 via-primary to-indigo-950 text-white overflow-hidden">
-                {/* Circuit background overlay */}
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none" />
-
-                {/* Profile Photo with Dual Glowing Ring */}
-                <div className="mt-1 relative w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-cyan-400 via-primary to-purple-400 backdrop-blur-md shadow-2xl border border-white/50 overflow-hidden group">
-                  <img 
-                    src="/logo.jpg" 
-                    alt="Nivethith Arasakumar" 
-                    className="w-full h-full object-cover rounded-full filter contrast-105"
-                    loading="eager"
-                  />
-                  <div className="absolute bottom-1 right-2 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white shadow-md" />
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="p-5 flex flex-col items-center text-center bg-card text-card-foreground flex-1 gap-3">
-                <div>
-                  <h3 className="text-xl font-extrabold tracking-tight text-foreground">Nivethith Arasakumar</h3>
-                  <div className="inline-flex items-center gap-1.5 mt-1 px-3 py-0.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-semibold">
-                    <span>AI Solutions Architect (Aspiring)</span>
-                  </div>
-                </div>
-
-                <div className="w-full border-t border-border/60 my-0.5" />
-
-                {/* Details 2x2 Grid */}
-                <div className="grid grid-cols-2 gap-2.5 w-full text-left bg-muted/40 p-3 rounded-xl border border-border/50">
-                  <div>
-                    <span className="text-muted-foreground block text-[9px] uppercase tracking-widest font-bold">Specialty</span>
-                    <span className="font-bold text-foreground text-xs">AI Architecture &amp; Data Systems</span>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground block text-[9px] uppercase tracking-widest font-bold">Location</span>
-                    <span className="font-bold text-foreground text-xs">Colombo, Sri Lanka</span>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground block text-[9px] uppercase tracking-widest font-bold">Experience</span>
-                    <span className="font-bold text-foreground text-xs">Building since 2022</span>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground block text-[9px] uppercase tracking-widest font-bold">Status</span>
-                    <span className="font-bold text-emerald-500 text-xs flex items-center gap-1">
-                      ● Active
-                    </span>
-                  </div>
-                </div>
-
-                {/* HD Barcode & Auth Tag */}
-                <div className="flex flex-col items-center mt-1 w-full gap-1">
-                  <div className="flex gap-[2.5px] items-end h-7 px-3 py-0.5 bg-white/90 dark:bg-black/40 rounded-lg border border-border/40 w-full justify-center">
-                    {Array.from({ length: 36 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="bg-foreground rounded-[1px]"
-                        style={{
-                          width: i % 4 === 0 ? "3.5px" : i % 2 === 0 ? "2px" : "1px",
-                          height: `${50 + Math.sin(i * 1.4) * 45}%`,
-                        }}
-                      />
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between w-full px-1 text-[10px]">
-                    <span className="font-mono font-bold tracking-widest text-primary">
-                      NA-2026-PRO
-                    </span>
-                    <span className="text-muted-foreground font-semibold text-[9px] uppercase tracking-wider">
-                      PORTFOLIO
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </HangingIdCard>
-        </motion.div>
-
+        </div>
       </div>
 
-      {/* Marquee appended natively to the bottom to span Full Width */}
-      <div className="w-full relative z-10 mt-auto">
-        <TechStackSection />
-      </div>
+      {/* Bottom Fade Seam Overlay into #e9ecf3 / #090c14 */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-background via-background/60 to-transparent z-10"
+      />
     </section>
   );
 };

@@ -1,81 +1,112 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { SectionEyebrow } from "../PortfonUI";
+
+const testimonials = [
+  {
+    name: "Dolphin Beach Villa",
+    role: "Luxury Beachfront Sanctuary · Sri Lanka",
+    content:
+      "Nivethith elevated our resort's digital presence with a stunning 3D interactive web sanctuary. The smooth 60fps animations, Three.js visual environment, and bespoke booking flows captured our luxury identity effortlessly.",
+    image: "/projects/dolphin-beach-villa.webp",
+  },
+  {
+    name: "ADW Trust Board",
+    role: "Humanitarian Relief Organization",
+    content:
+      "ADW Trust needed a transparent, highly accessible humanitarian platform to connect donors with charitable missions across Sri Lanka. Nivethith delivered an impactful, responsive experience our community relies on.",
+    image: "/projects/adw-trust.webp",
+  },
+  {
+    name: "Table Linens Executive Team",
+    role: "Hospitality Linens Manufacturer",
+    content:
+      "From custom embroidery inquiry workflows to the high-performance Supabase catalog, Nivethith engineered an exquisite digital storefront tailored to international luxury hospitality clients.",
+    image: "/projects/tablelinens.webp",
+  },
+];
 
 const TestimonialsSection = () => {
-  const testimonials = [
-    {
-      name: "Dolphin Beach Villa",
-      role: "Luxury Beachfront Sanctuary",
-      content: "Nivethith elevated our resort's digital presence with a stunning 3D interactive web sanctuary. The smooth 60fps animations, Three.js visual environment, and bespoke booking flows captured our luxury identity perfectly.",
-      image: "/projects/dolphin-beach-villa.webp"
-    },
-    {
-      name: "ADW Trust Board",
-      role: "Humanitarian Relief Organization",
-      content: "ADW Trust needed a transparent, highly accessible humanitarian platform to connect donors with our charitable missions across Sri Lanka. Nivethith delivered an impactful, fast, and emotionally resonant platform that our community relies on.",
-      image: "/projects/adw-trust.webp"
-    },
-    {
-      name: "Table Linens Executive Team",
-      role: "Hospitality Linens Manufacturer",
-      content: "From our custom embroidery inquiry workflows to the high-performance Supabase catalog, Nivethith delivered an exquisite digital experience tailored to our international luxury hospitality clients.",
-      image: "/projects/tablelinens.webp"
-    }
-  ];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const prev = () =>
+    setActiveIndex((i) => (i - 1 + testimonials.length) % testimonials.length);
+  const next = () =>
+    setActiveIndex((i) => (i + 1) % testimonials.length);
+
+  const current = testimonials[activeIndex];
 
   return (
-    <section id="testimonials" className="max-w-7xl mx-auto px-6 py-24">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8 }}
-        className="mb-16 text-center"
-      >
-        <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-          Client <span className="text-gradient-primary">Testimonials</span>
-        </h2>
-        <p className="text-muted-foreground max-w-xl mx-auto">
-          Feedback from leadership teams and organizations I've engineered production platforms for.
-        </p>
-      </motion.div>
+    <section id="testimonials" className="scroll-mt-20 relative pt-14 pb-24 md:pb-32">
+      <div className="max-w-[1140px] mx-auto px-5 md:px-6 relative z-10">
+        {/* Top Row: Left-Aligned Heading + Prev/Next Buttons */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+          <div>
+            <SectionEyebrow label="Client Feedback" light />
+            <h2 className="mt-3 text-[2.25rem] sm:text-[2.75rem] md:text-[3rem] font-medium tracking-[-0.04em] leading-[1.08] text-white max-w-lg">
+              Trusted by ambitious teams worldwide
+            </h2>
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {testimonials.map((test, i) => (
+          <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Previous testimonial"
+              className="w-11 h-11 rounded-full bg-white/15 border border-white/25 text-white flex items-center justify-center hover:bg-white hover:text-[#101010] transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Next testimonial"
+              className="w-11 h-11 rounded-full bg-white/15 border border-white/25 text-white flex items-center justify-center hover:bg-white hover:text-[#101010] transition-colors"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Portfon Clean White Customer Story Showcase Card */}
+        <AnimatePresence mode="wait">
           <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.15, duration: 0.5 }}
-            className="glass-panel p-8 rounded-3xl border border-foreground/10 flex flex-col relative overflow-hidden group hover:border-primary/30 transition-colors duration-500 shadow-lg"
+            key={activeIndex}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.35 }}
+            className="rounded-[28px] bg-card text-card-foreground border border-[var(--border)] p-6 sm:p-8 md:p-10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
           >
-            {/* Subtle glow orb */}
-            <div className="absolute -right-10 -top-10 w-32 h-32 bg-primary/10 rounded-full blur-[40px] group-hover:bg-primary/20 transition-colors duration-500 pointer-events-none" />
-            
-            {/* Quote Icon Background */}
-            <div className="absolute top-6 right-8 text-primary/10 select-none">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 11l-2 2v-3H4V4h6v7zm10 0l-2 2v-3h-4V4h6v7z" />
-              </svg>
+            <div className="lg:col-span-6 space-y-6">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-[#101010] dark:bg-white text-white dark:text-[#101010] text-xs font-medium">
+                Customer Stories · 0{activeIndex + 1} / 0{testimonials.length}
+              </span>
+
+              <p className="text-lg sm:text-xl leading-relaxed text-foreground font-normal">
+                “{current.content}”
+              </p>
+
+              <div className="pt-2">
+                <p className="text-base font-semibold text-foreground">
+                  {current.name}
+                </p>
+                <p className="text-sm text-muted-foreground">{current.role}</p>
+              </div>
             </div>
 
-            <p className="text-muted-foreground leading-relaxed flex-grow relative z-10 italic mb-8 text-sm md:text-base">
-              "{test.content}"
-            </p>
-
-            <div className="flex items-center gap-4 relative z-10 mt-auto">
-              <img 
-                src={test.image} 
-                alt={test.name} 
-                className="w-12 h-12 rounded-full object-cover border border-foreground/10 shadow-sm" 
-              />
-              <div>
-                <h4 className="text-foreground font-bold text-sm">{test.name}</h4>
-                <p className="text-primary text-xs font-medium">{test.role}</p>
+            <div className="lg:col-span-6">
+              <div className="rounded-2xl overflow-hidden border border-[var(--border)] aspect-[16/10] bg-[var(--surface-soft)]">
+                <img
+                  src={current.image}
+                  alt={current.name}
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
             </div>
           </motion.div>
-        ))}
+        </AnimatePresence>
       </div>
     </section>
   );

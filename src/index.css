@@ -1,55 +1,72 @@
 @import 'tailwindcss';
 @plugin 'lightswind/plugin';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-background: var(--bg);
-  --color-foreground: var(--fg);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-fg);
-  --color-primary: var(--primary);
+  --color-background: var(--pf-bg);
+  --color-foreground: var(--pf-fg);
+  --color-card: var(--pf-card);
+  --color-card-foreground: var(--pf-fg);
+  --color-primary: var(--pf-primary);
   --color-primary-foreground: #ffffff;
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-fg);
-  --color-border: var(--border);
+  --color-muted: var(--pf-muted);
+  --color-muted-foreground: var(--pf-muted-fg);
+  --color-border: var(--pf-border);
+  --font-sans: 'Inter', 'Geist Sans', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --pf-bg: #e9ecf3;
+  --pf-fg: #101010;
+  --pf-card: #ffffff;
+  --surface-soft: #f6f7fa;
+  --hero-bg: #c7ccd8;
+  --pf-primary: #3458ff;
+  --navy-deep: #03236d;
+  --gold: #ffc036;
+  --pf-muted: #dce1ec;
+  --pf-muted-fg: #474747;
+  --pf-border: rgba(16, 16, 16, 0.09);
+  --border: rgba(16, 16, 16, 0.09);
+  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(16, 16, 16, 0.09);
+}
+
+.dark {
+  --pf-bg: #090c14;
+  --pf-fg: #f6f7fa;
+  --pf-card: #121725;
+  --surface-soft: #171d2e;
+  --hero-bg: #101627;
+  --pf-primary: #4b6bff;
+  --navy-deep: #041540;
+  --gold: #ffc036;
+  --pf-muted: #1b2236;
+  --pf-muted-fg: #a1abbf;
+  --pf-border: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(18, 23, 37, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {
-  :root {
-    --bg: #f8fafc;
-    --fg: #0f172a;
-    --card: #ffffff;
-    --card-fg: #0f172a;
-    --primary: #8b5cf6;
-    --muted: #f1f5f9;
-    --muted-fg: #64748b;
-    --border: #e2e8f0;
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.1);
-  }
-
-  .dark {
-    --bg: #0f1014;
-    --fg: #fafafa;
-    --card: #16171b;
-    --card-fg: #fafafa;
-    --primary: #8b5cf6;
-    --muted: #272832;
-    --muted-fg: #a1a1aa;
-    --border: #272832;
-    --glass-bg: rgba(22, 23, 27, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.05);
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--pf-bg);
+    color: var(--pf-fg);
     min-height: 100vh;
-  }
-  
-  .dark body {
-    background-image: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15) 0%, transparent 60%), radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
-  /* View Transition API overrides for Lightswind ToggleTheme */
+  /* View Transition API overrides for Lightswind ThemeToggle */
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;
@@ -57,7 +74,8 @@
   }
 
   ::selection {
-    background-color: rgba(139, 92, 246, 0.3);
+    background-color: rgba(52, 88, 255, 0.25);
+    color: inherit;
   }
 
   a, button, [role="button"] {
@@ -67,22 +85,27 @@
 
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
-.text-gradient {
-  background: linear-gradient(135deg, var(--fg) 0%, var(--muted-fg) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.portfon-card {
+  background-color: var(--pf-card);
+  border: 1px solid var(--pf-border);
+  border-radius: 24px;
 }
 
-.text-gradient-primary {
-  background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }

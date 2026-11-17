@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, MapPin, Mail, Phone, Linkedin, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
-import { Input } from "../lightswind/input";
-import { Textarea } from "../lightswind/textarea";
-import { Button } from "../lightswind/button";
+import { CheckCircle2, AlertCircle, Loader2, Send } from "lucide-react";
 import { supabase } from "../../lib/supabase";
+import { PortfonButton, SectionEyebrow } from "../PortfonUI";
 
 export const ContactSection = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -82,109 +80,139 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="max-w-7xl mx-auto px-6 py-24">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8 }}
-        className="glass-panel p-8 md:p-12 rounded-[3rem] border border-foreground/10 relative overflow-hidden"
-      >
-        {/* Background Gradients */}
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row gap-12 md:gap-24">
-          
-          {/* Contact Info */}
-          <div className="flex-1 space-y-8">
+    <section id="contact" className="scroll-mt-20 w-full bg-background pt-12 pb-24 md:pb-32">
+      <div className="max-w-[1140px] mx-auto px-5 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+          {/* Left Info Column (matching Portfon /contact-us "Let's Talk") */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55 }}
+            className="lg:col-span-5 space-y-6 pt-2"
+          >
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-                Let's <span className="text-gradient-primary">Connect</span>
+              <SectionEyebrow label="Contact" />
+              <h2 className="mt-3 text-3xl sm:text-4xl font-medium tracking-[-0.03em] text-foreground">
+                Let’s Talk
               </h2>
-              <p className="text-muted-foreground">
-                Currently open for new opportunities and exciting collaborations. 
-                Whether you have a question or just want to say hi, I'll try my best to get back to you!
+              <p className="mt-3 text-sm sm:text-[15px] leading-relaxed text-muted-foreground max-w-sm">
+                Have an AI architecture challenge, platform build, or opportunity in mind? Reach out and let’s start the conversation.
               </p>
             </div>
 
-            <div className="space-y-6">
-              <a href="mailto:nivethith.16@gmail.com" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer group">
-                <div className="w-12 h-12 rounded-full glass-panel flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <span className="font-medium">nivethith.16@gmail.com</span>
-              </a>
-              <a href="tel:+94785997150" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer group">
-                <div className="w-12 h-12 rounded-full glass-panel flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <span className="font-medium">+94 78 599 7150</span>
-              </a>
-              <a href="https://linkedin.com/in/nivethith-ak" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer group">
-                <div className="w-12 h-12 rounded-full glass-panel flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Linkedin className="w-5 h-5" />
-                </div>
-                <span className="font-medium">linkedin.com/in/nivethith-ak</span>
-              </a>
-              <div className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer group">
-                <div className="w-12 h-12 rounded-full glass-panel flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <span className="font-medium">Colombo, Sri Lanka</span>
-              </div>
-            </div>
-          </div>
+            <div className="w-full h-px bg-[var(--border)] max-w-xs" />
 
-          {/* Form */}
-          <div className="flex-1 glass-panel p-8 rounded-[2rem] border border-foreground/10 relative">
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              <a
+                href="tel:+94785997150"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                +94 78 599 7150
+              </a>
+
+              <a
+                href="mailto:nivethith.16@gmail.com"
+                className="block text-xl sm:text-2xl font-medium tracking-[-0.02em] text-foreground hover:text-[#3458ff] transition-colors"
+              >
+                nivethith.16@gmail.com
+              </a>
+
+              <a
+                href="https://linkedin.com/in/nivethith-ak"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-sm text-muted-foreground hover:text-[#3458ff] transition-colors"
+              >
+                linkedin.com/in/nivethith-ak
+              </a>
+
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Colombo,
+                <br />
+                Sri Lanka
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Right Form Card (matching Portfon "Drop Us a Message") */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.08 }}
+            className="lg:col-span-7 portfon-card p-6 sm:p-8 md:p-10 shadow-sm"
+          >
+            <div className="mb-8">
+              <h3 className="text-2xl sm:text-3xl font-medium tracking-[-0.03em] text-foreground">
+                Drop a Message
+              </h3>
+              <p className="mt-1.5 text-sm text-muted-foreground">
+                Tell me what you’re building and I’ll get back to you shortly.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-1.5">Your Name</label>
-                <Input 
-                  type="text" 
+                <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">
+                  Full Name
+                </label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="rounded-xl py-3 px-4 bg-foreground/5 border-foreground/10 text-foreground focus-visible:ring-primary placeholder:text-muted-foreground/50"
-                  placeholder="John Doe"
+                  placeholder="Enter your full name"
+                  className="w-full pb-3 pt-1 bg-transparent border-b border-[var(--border)] text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-[#3458ff] transition-colors"
                 />
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-1.5">Your Email</label>
-                <Input 
-                  type="email" 
+                <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-2">
+                  Email
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="rounded-xl py-3 px-4 bg-foreground/5 border-foreground/10 text-foreground focus-visible:ring-primary placeholder:text-muted-foreground/50"
-                  placeholder="john@example.com"
+                  placeholder="Enter your email address"
+                  className="w-full pb-3 pt-1 bg-transparent border-b border-[var(--border)] text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-[#3458ff] transition-colors"
                 />
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-1.5">Message</label>
-                <Textarea 
+                <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-2">
+                  Message
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
                   rows={4}
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="rounded-xl py-3 px-4 bg-foreground/5 border-foreground/10 text-foreground focus-visible:ring-primary resize-none placeholder:text-muted-foreground/50 min-h-[120px]"
-                  placeholder="How can I help you?"
+                  placeholder="Tell me about your project or role..."
+                  className="w-full pb-3 pt-1 bg-transparent border-b border-[var(--border)] text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-[#3458ff] transition-colors resize-none"
                 />
               </div>
 
               <AnimatePresence>
                 {statusMessage && (
                   <motion.div
-                    initial={{ opacity: 0, y: -8 }}
+                    initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    className={`flex items-center gap-2 p-3 rounded-xl text-sm ${
+                    exit={{ opacity: 0, y: -6 }}
+                    className={`flex items-center gap-2 p-3.5 rounded-xl text-sm ${
                       status === "success"
-                        ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
-                        : "bg-rose-500/10 text-rose-500 border border-rose-500/20"
+                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25"
+                        : "bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/25"
                     }`}
                   >
                     {status === "success" ? (
@@ -197,28 +225,27 @@ export const ContactSection = () => {
                 )}
               </AnimatePresence>
 
-              <Button 
-                type="submit"
-                disabled={status === "loading"}
-                size="lg" 
-                className="w-full rounded-xl bg-primary text-primary-foreground font-bold shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] mt-4 h-12 flex items-center justify-center gap-2 transition-all disabled:opacity-60"
-              >
-                {status === "loading" ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    Send Message <Send className="w-4 h-4 ml-1" />
-                  </>
-                )}
-              </Button>
+              <div className="pt-2">
+                <PortfonButton
+                  type="submit"
+                  disabled={status === "loading"}
+                  size="lg"
+                  fullWidth
+                  icon={
+                    status === "loading" ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Send className="w-4 h-4" />
+                    )
+                  }
+                >
+                  {status === "loading" ? "Sending..." : "Send Message"}
+                </PortfonButton>
+              </div>
             </form>
-          </div>
-
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

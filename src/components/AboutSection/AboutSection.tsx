@@ -1,171 +1,218 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Award, Rocket, Calendar, GraduationCap, CheckCircle2, Cpu, BarChart3, Layers, Database, Terminal } from "lucide-react";
-import { skillCategories } from "../../data/skills";
+import { motion } from "framer-motion";
+import { Github, Linkedin, Mail, MapPin, Star, Twitter } from "lucide-react";
+import { useLenis } from "lenis/react";
+import { PortfonButton, SectionEyebrow } from "../PortfonUI";
+import { scrollToSection } from "../../lib/smoothScroll";
+import TechStackSection from "../TechStackSection/TechStackSection";
 
-const stats = [
-  { icon: <Award className="w-5 h-5" />, label: "Certifications", value: "4" },
-  { icon: <Rocket className="w-5 h-5" />, label: "Production Deployments", value: "10+" },
-  { icon: <Calendar className="w-5 h-5" />, label: "Building Since", value: "2022" },
-  { icon: <GraduationCap className="w-5 h-5" />, label: "Expected Graduation", value: "2029" },
+const disciplinePills = [
+  "Multi-Agent AI",
+  "LangGraph & LLMs",
+  "Full-Stack Next.js",
 ];
 
-const categoryIcons: Record<string, React.ReactNode> = {
-  "ai-ml": <Cpu className="w-4 h-4" />,
-  "data-science": <BarChart3 className="w-4 h-4" />,
-  "software-engineering": <Layers className="w-4 h-4" />,
-  "data-backend": <Database className="w-4 h-4" />,
-  "devops-infra": <Terminal className="w-4 h-4" />,
-};
+const clientAvatars = [
+  "/projects/autozure.webp",
+  "/projects/syntrix.webp",
+  "/projects/dolphin-beach-villa.webp",
+  "/projects/adw-trust.webp",
+];
 
 export const AboutSection = () => {
-  const [selectedCatId, setSelectedCatId] = useState(skillCategories[0].id);
+  const lenis = useLenis();
+  const [selectedPill, setSelectedPill] = useState<string>("Multi-Agent AI");
 
-  const activeCategory = skillCategories.find((c) => c.id === selectedCatId) || skillCategories[0];
+  const socialLinks = [
+    { icon: Github, href: "https://github.com/Nivethith-AK", label: "GitHub" },
+    { icon: Linkedin, href: "https://linkedin.com/in/nivethith-ak", label: "LinkedIn" },
+    { icon: Twitter, href: "https://x.com/Nivethith_AK", label: "X" },
+    { icon: Mail, href: "mailto:nivethith.16@gmail.com", label: "Email" },
+  ];
 
   return (
-    <section id="about" className="max-w-7xl mx-auto px-6 py-24">
-      {/* Top Narrative & Stats */}
-      <motion.div
-        className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start justify-between mb-20"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <div className="flex-1 space-y-6">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-            Architecting <span className="text-gradient-primary">Intelligent Systems</span>
-          </h2>
-          <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-            I am a Computer Science undergraduate, AI &amp; Data Science enthusiast, and aspiring AI Solutions Architect. I bridge foundational machine learning, multi-agent LLM systems, and high-performance data architectures with resilient, production-ready user interfaces.
-          </p>
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-            From deploying autonomous data-science pipelines with SHAP explainability (Syntrix AI) to crafting 3D immersive web environments with Three.js (Dolphin Beach Villa) and accessible enterprise platforms (ADW Trust, Table Linens), I focus on the entire system lifecycle — ensuring every algorithm translates into tangible real-world impact.
-          </p>
-        </div>
-
-        {/* 2x2 Stats Grid */}
-        <div className="w-full lg:w-auto lg:min-w-[420px] grid grid-cols-2 gap-4">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={i}
-              className="glass-panel p-5 md:p-6 rounded-2xl border border-foreground/10 hover:border-primary/50 transition-colors group relative overflow-hidden"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.1, duration: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <div className="absolute -right-6 -top-6 w-20 h-20 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-colors" />
-              <div className="text-primary mb-3 p-2.5 bg-primary/10 w-max rounded-xl">
-                {stat.icon}
-              </div>
-              <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-1">{stat.value}</h3>
-              <p className="text-xs md:text-sm font-medium text-muted-foreground">{stat.label}</p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Evidence-Backed Technical Competencies Matrix */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        viewport={{ once: true }}
-        className="glass-panel rounded-3xl p-6 md:p-10 border border-foreground/10 relative overflow-hidden shadow-xl"
-      >
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div>
-            <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
-              Technical Competencies &amp; Verification
-            </h3>
-            <p className="text-sm text-muted-foreground mt-1">
-              Evidence-backed skill architecture proven across real-world client platforms and production systems.
-            </p>
+    <section id="about" className="scroll-mt-20 w-full bg-background pt-16 md:pt-24 pb-12">
+      <div className="max-w-[1140px] mx-auto px-5 md:px-6">
+        {/* Top Row: Eyebrow Left + Statement Right */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-14 md:mb-16"
+        >
+          <div className="lg:col-span-4 pt-2">
+            <SectionEyebrow label="About Me" />
           </div>
-        </div>
 
-        {/* Category Selection Tabs (Animate UI sliding pill pattern) */}
-        <div className="flex flex-wrap gap-2 mb-8 p-1.5 bg-foreground/[0.03] dark:bg-foreground/[0.05] rounded-2xl border border-foreground/10">
-          {skillCategories.map((category) => {
-            const isSelected = selectedCatId === category.id;
-            return (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCatId(category.id)}
-                className={`relative px-4 py-2.5 rounded-xl text-xs md:text-sm font-medium transition-colors flex items-center gap-2 cursor-pointer select-none ${
-                  isSelected
-                    ? "text-primary-foreground font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {isSelected && (
-                  <motion.div
-                    layoutId="activeSkillTab"
-                    className="absolute inset-0 bg-primary rounded-xl shadow-md"
-                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                  />
-                )}
-                <span className="relative z-10">{categoryIcons[category.id]}</span>
-                <span className="relative z-10">{category.title}</span>
-              </button>
-            );
-          })}
-        </div>
+          <div className="lg:col-span-8 space-y-6">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-medium tracking-[-0.03em] leading-[1.1] text-foreground">
+              I architect intelligent systems that connect autonomous AI, data pipelines, and visual clarity.
+            </h2>
 
-        {/* Selected Category Skill Matrix */}
-        <AnimatePresence mode="wait">
+            <p className="text-[15.5px] md:text-[16.5px] leading-relaxed text-muted-foreground max-w-2xl">
+              Computer Science undergraduate at IIT Colombo (University of Westminster) and Microsoft &amp; IBM certified AI practitioner — building AutoZure, Syntrix AI, and production digital platforms since 2022.
+            </p>
+
+            <div>
+              <PortfonButton onClick={() => scrollToSection("#contact", lenis)} size="md">
+                Get In Touch
+              </PortfonButton>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Bottom 3-Card Asymmetric Grid (matching Portfon About Bottom Grid) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+          {/* Card 1: Portrait Identity Card */}
           <motion.div
-            key={activeCategory.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55 }}
+            className="md:col-span-4 portfon-card p-5 flex flex-col justify-between overflow-hidden min-h-[300px]"
           >
-            {/* Category Evidence Callout */}
-            <div className="p-4 rounded-xl bg-primary/[0.06] border border-primary/20 flex flex-col sm:flex-row sm:items-center gap-2 text-xs md:text-sm">
-              <span className="font-semibold text-primary uppercase tracking-wider text-[11px] shrink-0">
-                Production Evidence:
-              </span>
-              <span className="text-muted-foreground font-medium">
-                {activeCategory.evidence}
-              </span>
+            <div className="relative rounded-2xl overflow-hidden bg-[#1e40af]/10 aspect-[4/3.6] mb-4">
+              <img
+                src="/logo.jpg"
+                alt="Nivethith Arasakumar"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 dark:bg-[#0e1320]/90 text-[11px] font-medium text-foreground shadow-sm">
+                <MapPin className="w-3 h-3 text-[#3458ff]" />
+                <span>Colombo, Sri Lanka</span>
+              </div>
             </div>
 
-            {/* Skills Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {activeCategory.skills.map((skill, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 rounded-2xl border border-foreground/10 bg-background/60 hover:border-primary/40 transition-all flex flex-col justify-between gap-3 group"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
-                      {skill.name}
-                    </span>
-                    <span className="text-xs font-mono font-bold text-muted-foreground">
-                      {skill.level}%
-                    </span>
-                  </div>
-                  
-                  {/* Subtle Level Bar */}
-                  <div className="w-full h-1.5 bg-foreground/10 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${skill.level}%` }}
-                      transition={{ duration: 0.8, delay: idx * 0.05, ease: "easeOut" }}
-                      className="h-full bg-gradient-to-r from-violet-500 to-sky-400 rounded-full"
-                    />
-                  </div>
-                </div>
-              ))}
+            <div className="flex items-center justify-between pt-1">
+              <div>
+                <p className="text-sm font-semibold text-foreground">Nivethith Arasakumar</p>
+                <p className="text-xs text-muted-foreground">AI Solutions Architect (Aspiring)</p>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {socialLinks.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      className="w-8 h-8 rounded-full bg-[var(--surface-soft)] border border-[var(--border)] flex items-center justify-center text-muted-foreground hover:text-[#3458ff] hover:border-[#3458ff]/40 transition-colors"
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
-        </AnimatePresence>
-      </motion.div>
+
+          {/* Card 2: Counter + Project Avatars + Gold Rating Badge (matching "120+ Client Satisfaction Score ★ 4.8") */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.08 }}
+            className="md:col-span-4 portfon-card p-6 flex flex-col justify-between min-h-[300px]"
+          >
+            <div>
+              <h4 className="text-4xl md:text-[2.6rem] font-semibold tracking-[-0.04em] text-foreground leading-none mb-2">
+                10+
+              </h4>
+              <p className="text-sm text-muted-foreground">
+                Production AI &amp; Web Platforms Delivered
+              </p>
+            </div>
+
+            <div className="flex items-end justify-between gap-4 mt-8">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[var(--surface-soft)] border border-[var(--border)]">
+                <Star className="w-4 h-4 fill-[#ffc036] text-[#ffc036]" />
+                <span className="text-sm font-semibold text-foreground">4.9</span>
+                <span className="text-xs text-muted-foreground">Impact</span>
+              </div>
+
+              {/* Scattered Project Avatars */}
+              <div className="flex -space-x-2.5">
+                {clientAvatars.map((src, i) => (
+                  <img
+                    key={i}
+                    src={src}
+                    alt=""
+                    className="w-10 h-10 rounded-full object-cover ring-2 ring-card shadow-sm"
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Card 3: "Systems Thinking, Clean Execution." + Interactive Scattered Pills */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.16 }}
+            className="md:col-span-4 portfon-card p-6 flex flex-col justify-between min-h-[300px] overflow-hidden relative"
+          >
+            <div>
+              <h4 className="text-xl md:text-[1.35rem] font-medium tracking-[-0.02em] leading-snug text-foreground">
+                Systems Thinking,
+                <br />
+                Clean Execution.
+              </h4>
+              <p className="text-xs text-muted-foreground mt-2">
+                {selectedPill === "Multi-Agent AI" &&
+                  "Autonomous DAG orchestration, LangGraph agents & SHAP explainability."}
+                {selectedPill === "LangGraph & LLMs" &&
+                  "Multi-LLM routing across Gemini, OpenAI, Claude & local Ollama."}
+                {selectedPill === "Full-Stack Next.js" &&
+                  "Type-safe React 19, FastAPI, PostgreSQL, Supabase & BullMQ queues."}
+                {selectedPill === "PyTorch & ML" &&
+                  "Neural networks, CUDA acceleration & end-to-end MLflow pipelines."}
+              </p>
+            </div>
+
+            <div className="relative flex flex-col items-start gap-2.5 mt-6 pr-12">
+              {disciplinePills.map((pill) => {
+                const active = selectedPill === pill;
+                return (
+                  <button
+                    key={pill}
+                    type="button"
+                    onClick={() => setSelectedPill(pill)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                      active
+                        ? "bg-[#3458ff] text-white border-[#3458ff] shadow-sm"
+                        : "bg-[var(--surface-soft)] text-foreground/80 border-[var(--border)] hover:border-[#3458ff]/40"
+                    }`}
+                  >
+                    {pill}
+                  </button>
+                );
+              })}
+
+              {/* Signature Portfon Tilted Pill */}
+              <button
+                type="button"
+                onClick={() => setSelectedPill("PyTorch & ML")}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border absolute right-2 bottom-8 -rotate-[42deg] origin-center whitespace-nowrap ${
+                  selectedPill === "PyTorch & ML"
+                    ? "bg-[#3458ff] text-white border-[#3458ff] shadow-sm"
+                    : "bg-[var(--surface-soft)] text-foreground/80 border-[var(--border)] hover:border-[#3458ff]/40"
+                }`}
+              >
+                PyTorch &amp; ML
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Minimalist Tech Stack Marquee */}
+      <div className="mt-12 md:mt-16">
+        <TechStackSection />
+      </div>
     </section>
   );
 };
