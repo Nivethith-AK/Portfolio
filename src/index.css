@@ -30,7 +30,7 @@
   --pf-muted-fg: #474747;
   --pf-border: rgba(16, 16, 16, 0.09);
   --border: rgba(16, 16, 16, 0.09);
-  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-bg: rgba(255, 255, 255, 0.88);
   --glass-border: rgba(16, 16, 16, 0.09);
 }
 
@@ -47,13 +47,14 @@
   --pf-muted-fg: #a1abbf;
   --pf-border: rgba(255, 255, 255, 0.1);
   --border: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(18, 23, 37, 0.78);
+  --glass-bg: rgba(14, 18, 30, 0.88);
   --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
+    overflow-x: clip;
   }
 
   body {
@@ -63,7 +64,7 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* View Transition API overrides for Lightswind ThemeToggle */
